@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8D0E6D97-38B2-48EA-B9C6-A57A638D0110</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LCDDataSource</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6810A4CD-C613-4D84-A739-751B8319D97F</key>
+		<string>https://github.com/lukagabric/LCDDataSource.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LCDDataSource/LCDDataSource.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6810A4CD-C613-4D84-A739-751B8319D97F</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/lukagabric/LCDDataSource.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6810A4CD-C613-4D84-A739-751B8319D97F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6810A4CD-C613-4D84-A739-751B8319D97F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LCDDataSource</string>
+		</dict>
+	</array>
+</dict>
+</plist>
