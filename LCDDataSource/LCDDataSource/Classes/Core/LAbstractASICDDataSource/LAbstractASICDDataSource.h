@@ -75,13 +75,5 @@
                                       key:(NSString *)key
                               parserClass:(Class)parserClass;
 
-+ (ASIHTTPRequest *)requestWithUrl:(NSString *)url
-                   timeoutInterval:(NSTimeInterval)timeoutInterval
-                    secondsToCache:(NSTimeInterval)secondsToCache
-                           headers:(NSDictionary *)headers
-                        parameters:(NSDictionary *)params
-                     requestMethod:(NSString *)requestMethod
-                          userInfo:(NSDictionary *)userInfo;
-
 
 @end
