@@ -22,7 +22,6 @@
 
 - (void)loadStackedRequestsWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)loadStackedRequestsIgnoringCacheIntervalWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
-- (void)loadStackedRequestsIgnoringCacheInterval:(BOOL)ignoreCacheInterval withCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (BOOL)isStackedRequestsDataStale;
 - (void)cancelLoad;
 
@@ -35,6 +34,8 @@
 
 @interface LAbstractASICDDataSource ()
 
+
+- (void)loadStackedRequestsIgnoringCacheInterval:(BOOL)ignoreCacheInterval withCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 
 - (NSArray *)stackedRequests;
 - (void)saveContextAndStackedRequestsIDsWithCompletionBlock:(void (^)(NSError *error, BOOL newData))completionBlock;
