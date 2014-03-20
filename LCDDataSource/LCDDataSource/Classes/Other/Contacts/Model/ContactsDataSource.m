@@ -7,7 +7,7 @@
 
 - (ASIHTTPRequest *)contactRequest
 {
-    return [LAbstractASICDDataSource stackedRequestWithUrl:@"https://dl.dropboxusercontent.com/u/18883987/lions/contacts1.xml"
+    return [LAbstractASICDDataSource stackedRequestWithUrl:@"http://lukagabric.com/wp-content/uploads/2014/03/contacts.xml"
                                            timeoutInterval:5
                                                    headers:nil
                                                 parameters:nil
