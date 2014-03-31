@@ -6,7 +6,7 @@
 
 #import "LAbstractASICDDataSource.h"
 #import "LCoreDataController.h"
-#import "MBProgressHUD+L.h"
+#import "MBProgressHUD.h"
 
 
 #pragma mark - DSAssert
@@ -124,7 +124,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
     if ([self isStackedRequestsDataStale] || ignoreCacheInterval)
     {
         if (_activityView)
-            [MBProgressHUD showProgressForView:_activityView];
+            [self showProgressForActivityView];
         
         [self loadStackedRequest:[_stackedRequests objectAtIndex:0] withCompletionBlock:completionBlock];
     }
@@ -159,7 +159,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
             [weakContext reset];
             
             if (weakActivityView)
-                [MBProgressHUD hideProgressForView:weakActivityView];
+                [weakSelf hideProgressForActivityView];
             
             if (completionBlock && !weakSelf.loadCancelled)
                 completionBlock(error, NO);
@@ -345,7 +345,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
                 completionBlock(error, YES);
             
             if (weakActivityView)
-                [MBProgressHUD hideProgressForView:weakActivityView];
+                [weakSelf hideProgressForActivityView];
             
             [mainMOC() saveContextWithCompletionBlock:^(NSError *error) {
                 [weakSelf saveStackedRequestsIDs];
@@ -360,7 +360,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         [self saveStackedRequestsLoadTime];
         
         if (_activityView)
-            [MBProgressHUD hideProgressForView:_activityView];
+            [self hideProgressForActivityView];
         
         if (completionBlock && !_loadCancelled)
             completionBlock(nil, NO);
@@ -455,6 +455,29 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
     NSDate *lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StackedRequestsLastLoadTime.%@", NSStringFromClass([self class])]];
     
     return !lastUpdate || [(NSDate *)[lastUpdate dateByAddingTimeInterval:[self stackedRequestsLoadInterval]] compare:[NSDate date]] != NSOrderedDescending;
+}
+
+
+#pragma mark - Progress
+
+
+- (void)showProgressForActivityView
+{
+    NSArray *huds = [MBProgressHUD allHUDsForView:_activityView];
+    
+    if (huds && [huds count] == 0)
+    {
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:_activityView];
+        hud.dimBackground = YES;
+        [_activityView addSubview:hud];
+        [hud show:YES];
+    }
+}
+
+
+- (void)hideProgressForActivityView
+{
+    [MBProgressHUD hideAllHUDsForView:_activityView animated:YES];
 }
 
 

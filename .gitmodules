@@ -1,0 +1,6 @@
+[submodule "LCDDataSource/LCDDataSource/External/LAbstractViewController"]
+	path = LCDDataSource/LCDDataSource/External/LAbstractViewController
+	url = https://lukagabric@github.com/lukagabric/LAbstractViewController.git
+[submodule "LCDDataSource/LCDDataSource/External/LReachabilityController"]
+	path = LCDDataSource/LCDDataSource/External/LReachabilityController
+	url = https://lukagabric@github.com/lukagabric/LReachabilityController.git

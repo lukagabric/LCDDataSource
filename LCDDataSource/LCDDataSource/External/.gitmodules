@@ -1,0 +1,3 @@
+[submodule "LAbstractViewController/External"]
+	path = LAbstractViewController/External
+	url = https://lukagabric@github.com/lukagabric/LReachabilityController.git

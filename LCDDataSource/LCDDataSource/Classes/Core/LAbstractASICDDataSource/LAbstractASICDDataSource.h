@@ -51,6 +51,9 @@
 - (void)parserDidFinish:(id <LCDParserInterface>)parser;
 - (void)deleteItemsNotInSet:(NSSet *)items;
 
+- (void)showProgressForActivityView;
+- (void)hideProgressForActivityView;
+
 
 @property (assign, nonatomic) BOOL stackedRequestsRunning;
 @property (assign, nonatomic) BOOL loadCancelled;
