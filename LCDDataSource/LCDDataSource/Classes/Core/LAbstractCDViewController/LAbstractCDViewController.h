@@ -5,6 +5,7 @@
 
 
 #import "LAbstractViewController.h"
+#import <CoreData/CoreData.h>
 
 
 @interface LAbstractCDViewController : LAbstractViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>

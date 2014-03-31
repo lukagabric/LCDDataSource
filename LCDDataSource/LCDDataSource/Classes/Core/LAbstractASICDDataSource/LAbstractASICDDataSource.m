@@ -7,6 +7,8 @@
 #import "LAbstractASICDDataSource.h"
 #import "LCoreDataController.h"
 #import "MBProgressHUD.h"
+#import <CoreData/CoreData.h>
+#import "NSManagedObjectContext+L.h"
 
 
 #pragma mark - DSAssert

@@ -1,5 +1,6 @@
 #import "ContactsParser.h"
 #import "Contact+CD.h"
+#import "NSManagedObject+L.h"
 
 
 @implementation ContactsParser

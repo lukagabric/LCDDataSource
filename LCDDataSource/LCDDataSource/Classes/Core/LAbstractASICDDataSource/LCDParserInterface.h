@@ -4,6 +4,9 @@
 //
 
 
+#import "ASIHTTPRequest.h"
+
+
 @protocol LCDParserInterface <NSObject>
 
 

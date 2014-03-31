@@ -5,6 +5,7 @@
 
 
 #import "LAbstractCDViewController.h"
+#import "LCoreDataController.h"
 
 
 @implementation LAbstractCDViewController

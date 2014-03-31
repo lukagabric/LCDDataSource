@@ -5,6 +5,7 @@
 
 
 #import "NSManagedObjectContext+L.h"
+#import "LCoreDataController.h"
 
 
 @implementation NSManagedObjectContext (L)
