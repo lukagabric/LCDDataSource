@@ -23,16 +23,17 @@
 
 @interface LAbstractCDParser : NSObject <NSXMLParserDelegate, LCDParserInterface>
 {
+    NSManagedObjectContext *_context;
+    NSMutableSet *_itemsSet;
+
 	NSDictionary *_attributesDict;
 	NSString *_elementValue;
 	NSString *_elementName;
 	NSXMLParser *_parser;
     NSDateFormatter *_dateTimeFormatter;
     NSDateFormatter *_dateFormatter;
-    NSManagedObjectContext *_context;
+
     NSError *_error;
-    NSMutableSet *_itemsSet;
-    
     id _userInfo;
     ASIHTTPRequest *_request;
 }

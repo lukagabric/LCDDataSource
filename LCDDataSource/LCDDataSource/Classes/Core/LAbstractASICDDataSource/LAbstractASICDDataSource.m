@@ -223,7 +223,9 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         
 		void (^reqCompletionBlock)(ASIHTTPRequest *asiHttpRequest) = ^(ASIHTTPRequest *asiHttpRequest) {
             weakSelf.currentRequest = nil;
-			[weakSelf parseDataFromRequest:asiHttpRequest withCompletionBlock:completionBlock];
+            
+            if ([weakSelf shouldProcessResponseForRequest:asiHttpRequest])
+                [weakSelf parseDataFromRequest:asiHttpRequest withCompletionBlock:completionBlock];
 		};
         
 		[request setCompletionBlock:^{
@@ -480,6 +482,15 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 - (void)hideProgressForActivityView
 {
     [MBProgressHUD hideAllHUDsForView:_activityView animated:YES];
+}
+
+
+#pragma mark - Should process data for request
+
+
+- (BOOL)shouldProcessResponseForRequest:(ASIHTTPRequest *)request
+{
+    return YES;
 }
 
 

@@ -54,6 +54,8 @@
 - (void)showProgressForActivityView;
 - (void)hideProgressForActivityView;
 
+- (BOOL)shouldProcessResponseForRequest:(ASIHTTPRequest *)request;
+
 
 @property (assign, nonatomic) BOOL stackedRequestsRunning;
 @property (assign, nonatomic) BOOL loadCancelled;
