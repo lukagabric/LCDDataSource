@@ -35,6 +35,8 @@
 @interface LAbstractASICDDataSource ()
 
 
+- (void)initialize;
+
 - (void)loadStackedRequestsIgnoringCacheInterval:(BOOL)ignoreCacheInterval withCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 
 - (NSArray *)stackedRequests;

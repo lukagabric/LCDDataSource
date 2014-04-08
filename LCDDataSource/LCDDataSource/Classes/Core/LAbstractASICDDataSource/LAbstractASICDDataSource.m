@@ -36,12 +36,6 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 @implementation LAbstractASICDDataSource
 
 
-#pragma mark - Synthesize
-
-
-@synthesize dsContext = _dsContext;
-
-
 #pragma mark - Init & dealloc
 
 
