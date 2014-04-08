@@ -526,7 +526,6 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 {
     return [self requestWithUrl:url
                 timeoutInterval:timeoutInterval
-                 secondsToCache:0
                         headers:headers
                      parameters:params
                   requestMethod:requestMethod
@@ -544,7 +543,6 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 {
     return [self requestWithUrl:url
                 timeoutInterval:timeoutInterval
-                 secondsToCache:0
                         headers:headers
                      parameters:params
                   requestMethod:requestMethod
@@ -554,7 +552,6 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 
 + (ASIHTTPRequest *)requestWithUrl:(NSString *)url
 				   timeoutInterval:(NSTimeInterval)timeoutInterval
-					secondsToCache:(NSTimeInterval)secondsToCache
 						   headers:(NSDictionary *)headers
 						parameters:(NSDictionary *)params
 					 requestMethod:(NSString *)requestMethod
@@ -575,7 +572,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 	request.cachePolicy = ASIAskServerIfModifiedCachePolicy;
 	request.requestMethod = requestMethod;
 	request.timeOutSeconds = timeoutInterval;
-	request.secondsToCache = secondsToCache;
+	request.secondsToCache = 0;
     request.userInfo = userInfo;
     
 	for (NSString *key in [headers allKeys])

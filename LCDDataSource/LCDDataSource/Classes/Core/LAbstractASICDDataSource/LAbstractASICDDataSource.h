@@ -72,7 +72,6 @@
                               parserClass:(Class)parserClass
                            parserUserInfo:(id)parserUserInfo;
 
-
 + (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
                           timeoutInterval:(NSTimeInterval)timeoutInterval
                                   headers:(NSDictionary *)headers
@@ -80,6 +79,13 @@
                             requestMethod:(NSString *)requestMethod
                                       key:(NSString *)key
                               parserClass:(Class)parserClass;
+
++ (ASIHTTPRequest *)requestWithUrl:(NSString *)url
+                   timeoutInterval:(NSTimeInterval)timeoutInterval
+                           headers:(NSDictionary *)headers
+                        parameters:(NSDictionary *)params
+                     requestMethod:(NSString *)requestMethod
+                          userInfo:(NSDictionary *)userInfo;
 
 
 @end
