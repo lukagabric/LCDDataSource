@@ -44,6 +44,8 @@
 @interface LAbstractCDJSONParser ()
 
 
+- (void)initialize;
+
 - (void)bindObject;
 
 - (NSString *)getDateTimeFormat;
