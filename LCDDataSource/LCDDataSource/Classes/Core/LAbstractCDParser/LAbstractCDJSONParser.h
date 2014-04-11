@@ -14,7 +14,7 @@
 #define bindNumberToStringJ(obj, key)  obj = ifIsNull(key) ? nil : [[_currentElement objectForKey:key] stringValue]
 #define bindDateJ(obj, key)   obj = ifIsNull(key) ? nil : [_dateFormatter dateFromString:[_currentElement objectForKey:key]]
 #define bindDateTimeJ(obj, key)   obj = ifIsNull(key) ? nil : [_dateTimeFormatter dateFromString:[_currentElement objectForKey:key]]
-#define bindUrlFromDict(obj, key)	   obj = (!ifIsNull(key) && [_currentElement objectForKey:key] != nil) ? [NSURL URLWithString:key] : nil;
+#define bindUrlFromDict(obj, key)	   obj = (!ifIsNull(key) && [_currentElement objectForKey:key] != nil) ? [NSURL URLWithString:[_currentElement objectForKey:key]] : nil;
 #define bindBoolFromDict(obj, key)   obj = ifIsNull(key) ? NO : [[_currentElement objectForKey:key] boolValue]
 
 
