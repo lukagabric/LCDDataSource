@@ -218,10 +218,15 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 		void (^reqCompletionBlock)(ASIHTTPRequest *asiHttpRequest) = ^(ASIHTTPRequest *asiHttpRequest) {
             weakSelf.currentRequest = nil;
             
-            if ([[asiHttpRequest.responseHeaders objectForKey:@"X-ASIHTTPRequest-Response-Status-Code"] intValue] == 200)
-                completionBlock(asiHttpRequest, nil, nil);
-            else if ([weakSelf shouldProcessResponseForRequest:asiHttpRequest])
-                [weakSelf parseDataFromRequest:asiHttpRequest withCompletionBlock:completionBlock];
+            if (!_loadCancelled)
+            {
+                if (asiHttpRequest.error)
+                    completionBlock(asiHttpRequest, nil, asiHttpRequest.error);
+                else if (![weakSelf isDataNewForRequest:req])
+                    completionBlock(asiHttpRequest, nil, nil);
+                else if ([weakSelf shouldProcessResponseForRequest:asiHttpRequest])
+                    [weakSelf parseDataFromRequest:asiHttpRequest withCompletionBlock:completionBlock];
+            }
 		};
         
 		[request setCompletionBlock:^{
@@ -244,11 +249,11 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 {
     __weak LAbstractASICDDataSource *weakSelf = self;
     __weak NSManagedObjectContext *weakContext = _dsContext;
-    __block NSError *error = req.error;
+    __block NSError *error;
     __block NSSet *parsedItems;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if (!weakSelf.loadCancelled && !error && [weakSelf isDataNewForRequest:req])
+        if (!weakSelf.loadCancelled)
         {
             [weakContext performBlockAndWait:^{
                 Class parserClass = [req.userInfo objectForKey:@"parserClass"];
@@ -278,7 +283,8 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            completionBlock(req, parsedItems, error);
+            if (!_loadCancelled)
+                completionBlock(req, parsedItems, error);
         });
     });
 }
