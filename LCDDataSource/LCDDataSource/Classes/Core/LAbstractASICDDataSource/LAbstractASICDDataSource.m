@@ -218,7 +218,9 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 		void (^reqCompletionBlock)(ASIHTTPRequest *asiHttpRequest) = ^(ASIHTTPRequest *asiHttpRequest) {
             weakSelf.currentRequest = nil;
             
-            if ([weakSelf shouldProcessResponseForRequest:asiHttpRequest])
+            if ([[asiHttpRequest.responseHeaders objectForKey:@"X-ASIHTTPRequest-Response-Status-Code"] intValue] == 200)
+                completionBlock(asiHttpRequest, nil, nil);
+            else if ([weakSelf shouldProcessResponseForRequest:asiHttpRequest])
                 [weakSelf parseDataFromRequest:asiHttpRequest withCompletionBlock:completionBlock];
 		};
         
