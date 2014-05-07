@@ -88,4 +88,15 @@
 }
 
 
+- (NSSet *)getObjectsWithParentMOCObjects:(NSSet *)parentMOCObjects
+{
+    NSMutableSet *objects = [NSMutableSet new];
+    
+    for (NSManagedObject *managedObject in parentMOCObjects)
+        [objects addObject:[self objectWithID:managedObject.objectID]];
+    
+    return [objects copy];
+}
+
+
 @end

@@ -17,5 +17,7 @@
 - (void)saveContextAsync:(BOOL)async withCompletionBlock:(void(^)(NSError *error))completionBlock;
 - (void)saveContextAsync:(BOOL)async saveParent:(BOOL)saveParent withCompletionBlock:(void(^)(NSError *error))completionBlock;
 
+- (NSSet *)getObjectsWithParentMOCObjects:(NSSet *)parentMOCObjects;
+
 
 @end
