@@ -218,7 +218,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 		void (^reqCompletionBlock)(ASIHTTPRequest *asiHttpRequest) = ^(ASIHTTPRequest *asiHttpRequest) {
             weakSelf.currentRequest = nil;
             
-            if (!_loadCancelled)
+            if (!weakSelf.loadCancelled)
             {
                 if (asiHttpRequest.error)
                     completionBlock(asiHttpRequest, nil, asiHttpRequest.error);
@@ -283,7 +283,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (!_loadCancelled)
+            if (!weakSelf.loadCancelled)
                 completionBlock(req, parsedItems, error);
         });
     });
@@ -347,7 +347,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         __weak UIView *weakActivityView = _activityView;
         
         [_dsContext saveContextAsync:NO saveParent:NO withCompletionBlock:^(NSError *error) {
-            if (completionBlock && !_loadCancelled)
+            if (completionBlock && !weakSelf.loadCancelled)
                 completionBlock(error, YES);
             
             if (weakActivityView)
