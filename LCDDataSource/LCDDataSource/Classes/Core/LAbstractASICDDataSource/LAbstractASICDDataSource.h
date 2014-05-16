@@ -19,11 +19,18 @@
 @property (assign, nonatomic) BOOL saveAfterLoad;
 @property (weak, nonatomic) UIView *activityView;
 
+@property (readonly, nonatomic) BOOL finished;
+@property (readonly, nonatomic) BOOL running;
+@property (readonly, nonatomic) BOOL canceled;
+@property (readonly, nonatomic) NSError *error;
+@property (readonly, nonatomic) BOOL newData;
+
 
 - (void)loadStackedRequestsWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)loadStackedRequestsIgnoringCacheIntervalWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (BOOL)isStackedRequestsDataStale;
 - (void)cancelLoad;
+- (void)saveContextAndStackedRequestsIDsWithCompletionBlock:(void (^)(NSError *error, BOOL newData))completionBlock;
 
 
 @end
@@ -40,7 +47,6 @@
 - (void)loadStackedRequestsIgnoringCacheInterval:(BOOL)ignoreCacheInterval withCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 
 - (NSArray *)stackedRequests;
-- (void)saveContextAndStackedRequestsIDsWithCompletionBlock:(void (^)(NSError *error, BOOL newData))completionBlock;
 
 - (NSString *)IDForRequest:(ASIHTTPRequest *)request;
 - (void)saveStackedRequestsIDs;
@@ -58,9 +64,10 @@
 
 - (BOOL)shouldProcessResponseForRequest:(ASIHTTPRequest *)request;
 
+- (void)loadDidFinishWithError:(NSError *)error andCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
+- (void)loadDidStart;
 
-@property (assign, nonatomic) BOOL stackedRequestsRunning;
-@property (assign, nonatomic) BOOL loadCancelled;
+
 @property (weak, nonatomic) ASIHTTPRequest *currentRequest;
 @property (weak, nonatomic) id <LCDParserInterface> currentParser;
 

@@ -113,9 +113,9 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 {
     DSAssert([[NSThread currentThread] isMainThread], @"This method must be called on the main thread.");
     
-    if (_stackedRequestsRunning == YES || [_stackedRequests = [self stackedRequests] count] == 0) return;
+    if (_running == YES || [_stackedRequests = [self stackedRequests] count] == 0) return;
     
-    _stackedRequestsRunning = YES;
+    [self loadDidStart];
     
     if ([self isStackedRequestsDataStale] || ignoreCacheInterval)
     {
@@ -126,8 +126,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
     }
     else
     {
-        if (completionBlock && !_loadCancelled)
-            completionBlock(nil, NO);
+        [self loadDidFinishWithError:nil andCompletionBlock:completionBlock];
     }
 }
 
@@ -148,8 +147,8 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
     __weak UIView *weakActivityView = _activityView;
     
     void (^stackedRequestCompletion)(ASIHTTPRequest *, NSSet *, NSError *) = ^(ASIHTTPRequest *request, NSSet *parsedItems, NSError *error) {
-        if (weakSelf.loadCancelled) return;
-        
+        if (weakSelf.canceled) return;
+
         if (error)
         {
             [weakContext reset];
@@ -157,8 +156,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
             if (weakActivityView)
                 [weakSelf hideProgressForActivityView];
             
-            if (completionBlock && !weakSelf.loadCancelled)
-                completionBlock(error, NO);
+            [weakSelf loadDidFinishWithError:error andCompletionBlock:completionBlock];
         }
         else
         {
@@ -170,8 +168,8 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
             {
                 if (weakSelf.saveAfterLoad)
                     [weakSelf saveContextAndStackedRequestsIDsWithCompletionBlock:completionBlock];
-                else if (completionBlock && !weakSelf.loadCancelled)
-                    completionBlock(nil, [weakContext hasChanges]);
+                else
+                    [weakSelf loadDidFinishWithError:nil andCompletionBlock:completionBlock];
             }
         }
     };
@@ -181,7 +179,30 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 }
 
 
-#pragma mark - Cancel Load
+#pragma mark - Load status
+
+
+- (void)loadDidFinishWithError:(NSError *)error andCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock
+{
+    _finished = YES;
+    _running = NO;
+    _newData = error ? NO : [_dsContext hasChanges];
+    _canceled = NO;
+    _error = error;
+    
+    if (completionBlock && !_canceled)
+        completionBlock(_error, _newData);
+}
+
+
+- (void)loadDidStart
+{
+    _finished = NO;
+    _running = YES;
+    _newData = NO;
+    _canceled = NO;
+    _error = nil;
+}
 
 
 - (void)cancelLoad
@@ -196,7 +217,11 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         [_currentParser abortParsing];
     }
     
-    _loadCancelled = YES;
+    _finished = YES;
+    _running = NO;
+    _newData = NO;
+    _canceled = YES;
+    _error = nil;
 }
 
 
@@ -218,7 +243,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 		void (^reqCompletionBlock)(ASIHTTPRequest *asiHttpRequest) = ^(ASIHTTPRequest *asiHttpRequest) {
             weakSelf.currentRequest = nil;
             
-            if (!weakSelf.loadCancelled)
+            if (!weakSelf.canceled)
             {
                 if (asiHttpRequest.error)
                     completionBlock(asiHttpRequest, nil, asiHttpRequest.error);
@@ -253,7 +278,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
     __block NSSet *parsedItems;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if (!weakSelf.loadCancelled)
+        if (!weakSelf.canceled)
         {
             [weakContext performBlockAndWait:^{
                 Class parserClass = [req.userInfo objectForKey:@"parserClass"];
@@ -283,7 +308,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (!weakSelf.loadCancelled)
+            if (!weakSelf.canceled)
                 completionBlock(req, parsedItems, error);
         });
     });
@@ -347,7 +372,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         __weak UIView *weakActivityView = _activityView;
         
         [_dsContext saveContextAsync:NO saveParent:NO withCompletionBlock:^(NSError *error) {
-            if (completionBlock && !weakSelf.loadCancelled)
+            if (completionBlock && !weakSelf.canceled)
                 completionBlock(error, YES);
             
             if (weakActivityView)
@@ -368,7 +393,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
         if (_activityView)
             [self hideProgressForActivityView];
         
-        if (completionBlock && !_loadCancelled)
+        if (completionBlock && !_canceled)
             completionBlock(nil, NO);
     }
 }
