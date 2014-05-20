@@ -592,7 +592,7 @@ __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
 		urlString = [url stringByAppendingFormat:@"?%@", paramsString];
 	}
     
-	__weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlString]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlString]];
     
 	request.downloadCache = [ASIDownloadCache sharedCache];
     request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
