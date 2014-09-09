@@ -1,18 +1,18 @@
 LCDDataSource
 =============
 
-LCDDataSource is used to simplify the process of getting remote data and storing it using Core Data framework. The data source implementation itself is in the LAbstractASIDataSource class and LCDParserInterface.h defines a protocol that the parser must conform to. Other classes are listed below. The model uses a Root context for async data persistance (saving data in background so main thread is not blocked). Main context is used on the main thread - presenting data to the user (UI). Worker contexts are used by the data sources and parsers for asynchronous data fetching and parsing. There is only one Root and one Main context, but multiple Worker contexts - one for each data source. Contexts are in a parent-child relationships: Root->Main->Worker(s). Any Worker context may be easily merged into Main context or discarded at all times without disturbing the main context.
+LCDDataSource is used to simplify the process of getting remote data and storing it using Core Data framework. The model uses a Root context for async data persistance (saving data in background so main thread is not blocked). Main context is used on the main thread - presenting data to the user (UI). Worker contexts are used by the data sources and parsers for asynchronous data fetching and parsing. There is only one Root and one Main context, but multiple Worker contexts - one for each data source. Contexts are in a parent-child relationships: Root->Main->Worker(s). Any Worker context may be easily merged into Main context or discarded at all times without disturbing the main context.
 
 ASIHTTPRequest is used for data download.
 
-LAbstractASICDDataSource
-------------------------
+LAbstractStackedRequestsSource
+------------------------------
 
 The idea is to use the data source by calling a method of the structure below. Method -stackedRequests returns an array of requests that will be performed in a given order, convenient for foreign keys etc. It is possible to set cache intervals for entire set of dependant requests. If one of the requests fails, all data is discarded.
 
     - (ASIHTTPRequest *)contactRequest
     {
-        return [LAbstractASICDDataSource stackedRequestWithUrl:@"https://dl.dropboxusercontent.com/u/18883987/lions/contacts1.xml"
+        return [LAbstractStackedRequestsSource stackedRequestWithUrl:@"https://dl.dropboxusercontent.com/u/18883987/lions/contacts1.xml"
                                            timeoutInterval:5
                                                    headers:nil
                                                 parameters:nil
