@@ -7,6 +7,15 @@
 #import <CoreData/CoreData.h>
 
 
+typedef NS_ENUM(NSUInteger, LContentWeight)
+{
+    LContentWeightEmpty = 0,
+    LContentWeightRelation,
+    LContentWeightInfo,
+    LContentWeightFull
+};
+
+
 @interface NSManagedObject (L)
 
 
