@@ -33,7 +33,7 @@
     _dataSource = [ContactsDataSource new];
     _dataSource.activityView = self.view;
     _dataSource.saveAfterLoad = YES;
-    [_dataSource loadStackedRequestsWithCompletionBlock:^(NSError *error, BOOL newData) {
+    [_dataSource updateDataWithCompletionBlock:^(NSError *error, BOOL newData) {
         [weakSelf displayData];
     }];
 }
