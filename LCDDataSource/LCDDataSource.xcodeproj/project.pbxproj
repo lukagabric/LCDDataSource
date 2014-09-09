@@ -13,6 +13,8 @@
 		412DAF3418E99F0100A31112 /* LReachabilityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3018E99F0100A31112 /* LReachabilityController.m */; };
 		412DAF3918E99F3E00A31112 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3818E99F3E00A31112 /* Reachability.m */; };
 		4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */; };
+		41649CA719BCB7F6009278DB /* LAbstractStackedRequestsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 41649CA619BCB7F6009278DB /* LAbstractStackedRequestsSource.m */; };
+		41DA664C19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA664B19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m */; };
 		41DCE30B18DB835A00EFFF5C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */; };
 		41F90001189105B600E20929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F90000189105B600E20929 /* CoreData.framework */; };
 		41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41F900A91891074E00E20929 /* LCDDataSource.xcdatamodeld */; };
@@ -27,7 +29,6 @@
 		41F901071891074F00E20929 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900C11891074E00E20929 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41F9010A1891074F00E20929 /* NSManagedObject+L.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900C91891074E00E20929 /* NSManagedObject+L.m */; };
 		41F9010B1891074F00E20929 /* NSManagedObjectContext+L.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900CB1891074E00E20929 /* NSManagedObjectContext+L.m */; };
-		41F9010C1891074F00E20929 /* LAbstractASICDDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900CE1891074E00E20929 /* LAbstractASICDDataSource.m */; };
 		41F9010D1891074F00E20929 /* LAbstractCDParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900D21891074E00E20929 /* LAbstractCDParser.m */; };
 		41F901101891074F00E20929 /* LCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900DB1891074E00E20929 /* LCoreDataController.m */; };
 		41F901111891074F00E20929 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900DE1891074E00E20929 /* MBProgressHUD.m */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		412241AF19BF181E0056F580 /* LCDParserInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCDParserInterface.h; sourceTree = "<group>"; };
 		412AB6A118ED27180065D3F5 /* ContactsJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsJSONParser.h; sourceTree = "<group>"; };
 		412AB6A218ED27180065D3F5 /* ContactsJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsJSONParser.m; sourceTree = "<group>"; };
 		412DAF2718E99E4A00A31112 /* LAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractViewController.h; sourceTree = "<group>"; };
@@ -63,6 +65,11 @@
 		412DAF3818E99F3E00A31112 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		4159C43B18ED21C50039AD52 /* LAbstractCDJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDJSONParser.h; sourceTree = "<group>"; };
 		4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDJSONParser.m; sourceTree = "<group>"; };
+		41649CA519BCB7F6009278DB /* LAbstractStackedRequestsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractStackedRequestsSource.h; sourceTree = "<group>"; };
+		41649CA619BCB7F6009278DB /* LAbstractStackedRequestsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractStackedRequestsSource.m; sourceTree = "<group>"; };
+		41649CA819BCEA73009278DB /* LDataUpdateOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationDelegate.h; sourceTree = "<group>"; };
+		41DA664A19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractDataUpdateOperation.h; sourceTree = "<group>"; };
+		41DA664B19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractDataUpdateOperation.m; sourceTree = "<group>"; };
 		41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F90000189105B600E20929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41F90018189105B600E20929 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -94,9 +101,6 @@
 		41F900C91891074E00E20929 /* NSManagedObject+L.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+L.m"; sourceTree = "<group>"; };
 		41F900CA1891074E00E20929 /* NSManagedObjectContext+L.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+L.h"; sourceTree = "<group>"; };
 		41F900CB1891074E00E20929 /* NSManagedObjectContext+L.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+L.m"; sourceTree = "<group>"; };
-		41F900CD1891074E00E20929 /* LAbstractASICDDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractASICDDataSource.h; sourceTree = "<group>"; };
-		41F900CE1891074E00E20929 /* LAbstractASICDDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractASICDDataSource.m; sourceTree = "<group>"; };
-		41F900CF1891074E00E20929 /* LCDParserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCDParserInterface.h; sourceTree = "<group>"; };
 		41F900D11891074E00E20929 /* LAbstractCDParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDParser.h; sourceTree = "<group>"; };
 		41F900D21891074E00E20929 /* LAbstractCDParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDParser.m; sourceTree = "<group>"; };
 		41F900DA1891074E00E20929 /* LCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCoreDataController.h; sourceTree = "<group>"; };
@@ -198,6 +202,18 @@
 			path = External/LReachabilityController/LReachabilityController/Classes/Core/Reachability;
 			sourceTree = "<group>";
 		};
+		41DA664619BBBB97008BAB85 /* LAbstractDataController */ = {
+			isa = PBXGroup;
+			children = (
+				41DA664A19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.h */,
+				41DA664B19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m */,
+				41649CA519BCB7F6009278DB /* LAbstractStackedRequestsSource.h */,
+				41649CA619BCB7F6009278DB /* LAbstractStackedRequestsSource.m */,
+				41649CA819BCEA73009278DB /* LDataUpdateOperationDelegate.h */,
+			);
+			path = LAbstractDataController;
+			sourceTree = "<group>";
+		};
 		41F90002189105B600E20929 /* LCDDataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,8 +251,8 @@
 				412DAF2A18E99E7600A31112 /* LAbstractCDViewController */,
 				41F900AE1891074E00E20929 /* ASIHTTPRequest */,
 				41F900C51891074E00E20929 /* ClassExtensions */,
-				41F900CC1891074E00E20929 /* LAbstractASICDDataSource */,
 				41F900D01891074E00E20929 /* LAbstractCDParser */,
+				41DA664619BBBB97008BAB85 /* LAbstractDataController */,
 				41F900D91891074E00E20929 /* LCoreDataController */,
 				41F900DC1891074E00E20929 /* MBProgressHUD */,
 			);
@@ -281,19 +297,10 @@
 			path = ClassExtensions;
 			sourceTree = "<group>";
 		};
-		41F900CC1891074E00E20929 /* LAbstractASICDDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				41F900CD1891074E00E20929 /* LAbstractASICDDataSource.h */,
-				41F900CE1891074E00E20929 /* LAbstractASICDDataSource.m */,
-				41F900CF1891074E00E20929 /* LCDParserInterface.h */,
-			);
-			path = LAbstractASICDDataSource;
-			sourceTree = "<group>";
-		};
 		41F900D01891074E00E20929 /* LAbstractCDParser */ = {
 			isa = PBXGroup;
 			children = (
+				412241AF19BF181E0056F580 /* LCDParserInterface.h */,
 				41F900D11891074E00E20929 /* LAbstractCDParser.h */,
 				41F900D21891074E00E20929 /* LAbstractCDParser.m */,
 				4159C43B18ED21C50039AD52 /* LAbstractCDJSONParser.h */,
@@ -531,9 +538,11 @@
 				41F9010D1891074F00E20929 /* LAbstractCDParser.m in Sources */,
 				41F9011C1891074F00E20929 /* Contact.m in Sources */,
 				41F900FF1891074E00E20929 /* main.m in Sources */,
+				41DA664C19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m in Sources */,
 				41F901001891074E00E20929 /* ASIAuthenticationDialog.m in Sources */,
 				4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */,
 				41F901151891074F00E20929 /* ContactsViewController.m in Sources */,
+				41649CA719BCB7F6009278DB /* LAbstractStackedRequestsSource.m in Sources */,
 				41F901111891074F00E20929 /* MBProgressHUD.m in Sources */,
 				41F9011B1891074F00E20929 /* Contact+CD.m in Sources */,
 				41F901071891074F00E20929 /* ASINetworkQueue.m in Sources */,
@@ -550,7 +559,6 @@
 				41F901101891074F00E20929 /* LCoreDataController.m in Sources */,
 				41F901021891074E00E20929 /* ASIDataDecompressor.m in Sources */,
 				412DAF3918E99F3E00A31112 /* Reachability.m in Sources */,
-				41F9010C1891074F00E20929 /* LAbstractASICDDataSource.m in Sources */,
 				41F9010A1891074F00E20929 /* NSManagedObject+L.m in Sources */,
 				41F901121891074F00E20929 /* AppDelegate.m in Sources */,
 				41F901191891074F00E20929 /* HomeViewController.m in Sources */,

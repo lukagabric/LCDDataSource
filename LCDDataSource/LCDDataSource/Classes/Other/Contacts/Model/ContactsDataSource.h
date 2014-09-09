@@ -1,7 +1,7 @@
-#import "LAbstractASICDDataSource.h"
+#import "LAbstractStackedRequestsSource.h"
 
 
-@interface ContactsDataSource : LAbstractASICDDataSource
+@interface ContactsDataSource : LAbstractStackedRequestsSource
 
 
 @end
