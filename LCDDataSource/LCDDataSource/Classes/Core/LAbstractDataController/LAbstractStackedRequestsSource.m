@@ -53,6 +53,7 @@ static NSOperationQueue *dataUpdateQueue;
 - (void)initialize
 {
     [self createWorkerContext];
+    _saveAfterLoad = YES;
 }
 
 

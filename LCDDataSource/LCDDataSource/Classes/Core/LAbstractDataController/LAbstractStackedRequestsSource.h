@@ -14,18 +14,38 @@
 @interface LAbstractStackedRequestsSource : NSObject <LDataUpdateOperationDelegate>
 
 
-@property (assign, nonatomic) BOOL saveAfterLoad;
-@property (weak, nonatomic) UIView *activityView;
 @property (readonly, nonatomic) BOOL finished;
 @property (readonly, nonatomic) BOOL running;
 @property (readonly, nonatomic) BOOL canceled;
-@property (readonly, nonatomic) NSError *error;
 @property (readonly, nonatomic) BOOL newData;
+@property (readonly, nonatomic) NSError *error;
+
+@property (assign, nonatomic) BOOL saveAfterLoad;
+@property (weak, nonatomic) UIView *activityView;
 
 
 - (void)updateDataIgnoringCacheIntervalWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)updateDataWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)cancelLoad;
+
+
+@end
+
+
+#pragma mark - Protected
+
+
+@interface LAbstractStackedRequestsSource ()
+
+
+@property (copy, nonatomic) void(^updateCompletionBlock)(NSError *error, BOOL newData);
+@property (strong, nonatomic) NSManagedObjectContext *workerContext;
+@property (strong, nonatomic) NSArray *operations;
+@property (strong, nonatomic) NSArray *sourceStackedRequests;
+
+
+- (NSArray *)stackedRequests;
+- (NSUInteger)stackedRequestsSecondsToCache;
 
 
 + (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
@@ -51,25 +71,6 @@
                         parameters:(NSDictionary *)params
                      requestMethod:(NSString *)requestMethod
                           userInfo:(NSDictionary *)userInfo;
-
-
-@end
-
-
-#pragma mark - Protected
-
-
-@interface LAbstractStackedRequestsSource ()
-
-
-@property (copy, nonatomic) void(^updateCompletionBlock)(NSError *error, BOOL newData);
-@property (strong, nonatomic) NSManagedObjectContext *workerContext;
-@property (strong, nonatomic) NSArray *operations;
-@property (strong, nonatomic) NSArray *sourceStackedRequests;
-
-
-- (NSArray *)stackedRequests;
-- (NSUInteger)stackedRequestsSecondsToCache;
 
 
 @end

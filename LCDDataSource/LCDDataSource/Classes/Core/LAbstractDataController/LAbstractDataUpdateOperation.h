@@ -15,6 +15,7 @@
 
 @interface LAbstractDataUpdateOperation : NSOperation
 
+
 @property (weak, nonatomic, readonly) id <LDataUpdateOperationDelegate> dataUpdateDelegate;
 @property (strong, nonatomic, readonly) NSManagedObjectContext *workerContext;
 @property (strong, nonatomic, readonly) ASIHTTPRequest *request;
