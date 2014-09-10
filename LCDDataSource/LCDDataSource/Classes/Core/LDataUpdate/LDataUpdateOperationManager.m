@@ -266,14 +266,14 @@ static NSOperationQueue *dataUpdateQueue;
             
             if (error) return;
             
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf loadDidFinishWithError:nil canceled:NO forceNewData:YES];
+            });
+            
             [mainMOC() saveContextWithCompletionBlock:^(NSError *error) {
                 NSAssert(error == nil, @"Error saving main moc");
                 [weakSelf saveStackedRequestsIDs];
                 [weakSelf saveStackedRequestsLastUpdateTime];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf loadDidFinishWithError:nil canceled:NO forceNewData:YES];
-                });
             }];
         }];
     }
