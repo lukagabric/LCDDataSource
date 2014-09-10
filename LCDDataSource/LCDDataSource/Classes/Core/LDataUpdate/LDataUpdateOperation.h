@@ -23,8 +23,7 @@
 
 - (instancetype)initWithDataUpdateDelegate:(id <LDataUpdateOperationDelegate>)dataUpdateDelegate
                                    request:(ASIHTTPRequest *)request
-                                   context:(NSManagedObjectContext *)context
-                               saveContext:(BOOL)saveContext;
+                                   context:(NSManagedObjectContext *)context;
 
 
 @end
@@ -34,9 +33,6 @@
 
 
 @interface LDataUpdateOperation ()
-
-
-@property (assign, nonatomic) BOOL saveContext;
 
 
 - (NSError *)parseData;

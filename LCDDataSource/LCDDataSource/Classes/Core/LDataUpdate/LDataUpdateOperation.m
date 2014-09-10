@@ -22,7 +22,6 @@
 - (instancetype)initWithDataUpdateDelegate:(id <LDataUpdateOperationDelegate>)dataUpdateDelegate
                                    request:(ASIHTTPRequest *)request
                                    context:(NSManagedObjectContext *)context
-                               saveContext:(BOOL)saveContext
 {
     self = [super init];
     if (self)
@@ -30,7 +29,6 @@
         _dataUpdateDelegate = dataUpdateDelegate;
         _workerContext = context;
         _request = request;
-        _saveContext = saveContext;
     }
     return self;
 }
@@ -57,7 +55,7 @@
 
         if (_request.error || ![_dataUpdateDelegate operation:self isResponseValidForRequest:_request])
         {
-            [self handleError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"request": _request}]];
+            [self finishOperationWithError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"request": _request}]];
             return;
         }
         
@@ -72,18 +70,13 @@
 
         if (parsingError)
         {
-            [self handleError:parsingError];
+            [self finishOperationWithError:parsingError];
             return;
         }
 
         if ([self isCancelled]) return;
 
-        if (_saveContext)
-            [self performContextSave];
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [_dataUpdateDelegate operation:self didFinishWithError:nil];
-        });
+        [self finishOperationWithError:nil];
     }
 }
 
@@ -161,41 +154,14 @@
 }
 
 
-#pragma mark - Save
+#pragma mark - Finish
 
 
-- (void)performContextSave
+- (void)finishOperationWithError:(NSError *)error
 {
-    __weak typeof(self) weakSelf = self;
-    
-    if ([_workerContext hasChanges])
-    {
-        [_workerContext saveContextAsync:NO saveParent:NO withCompletionBlock:^(NSError *error) {
-            if ([weakSelf isCancelled]) return;
-            
-            if (error) return;
-            
-            [mainMOC() saveContextWithCompletionBlock:^(NSError *error) {
-                NSAssert(error == nil, @"Error saving main moc");
-                [weakSelf.dataUpdateDelegate operation:weakSelf didPerformSaveWithNewData:YES];
-            }];
-        }];
-    }
-    else
-    {
-        NSLog(@"No need to save because there are no changes in context.");
-        
-        [weakSelf.dataUpdateDelegate operation:weakSelf didPerformSaveWithNewData:NO];
-    }
-}
-
-
-#pragma mark - Handle error
-
-
-- (void)handleError:(NSError *)error
-{
-    [_dataUpdateDelegate operation:self didFinishWithError:error];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [_dataUpdateDelegate operation:self didFinishWithError:error];
+    });
 }
 
 

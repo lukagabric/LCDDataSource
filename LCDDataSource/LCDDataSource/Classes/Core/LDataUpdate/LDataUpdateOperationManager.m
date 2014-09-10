@@ -164,7 +164,11 @@ static NSOperationQueue *dataUpdateQueue;
 
 - (void)cancelLoad
 {
-    NSAssert([[NSThread currentThread] isMainThread], @"This method must be called on the main thread.");
+    if (![[NSThread currentThread] isMainThread])
+    {
+        [self performSelectorOnMainThread:@selector(cancelLoad) withObject:nil waitUntilDone:NO];
+        return;
+    }
     
     [self loadDidFinishWithError:nil canceled:YES forceNewData:NO];
     
@@ -181,9 +185,16 @@ static NSOperationQueue *dataUpdateQueue;
     if (_canceled) return;
     
     if (error)
+    {
         [self loadDidFinishWithError:error canceled:NO forceNewData:NO];
+    }
     else if (operation.request == [_stackedRequests lastObject])
-        [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
+    {
+        if (_saveAfterLoad)
+            [self performContextSave];
+        else
+            [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
+    }
     
     NSLog(@"- (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error");
 }
@@ -212,15 +223,6 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-- (void)operation:(LDataUpdateOperation *)operation didPerformSaveWithNewData:(BOOL)newData;
-{
-    if (newData)
-        [self saveStackedRequestsIDs];
-    
-    [self saveStackedRequestsLastUpdateTime];
-}
-
-
 #pragma mark - Protected methods
 
 
@@ -246,8 +248,42 @@ static NSOperationQueue *dataUpdateQueue;
 {
     return [[LDataUpdateOperation alloc] initWithDataUpdateDelegate:self
                                                             request:request
-                                                            context:_workerContext
-                                                        saveContext:_saveAfterLoad && request == [_stackedRequests lastObject]];
+                                                            context:_workerContext];
+}
+
+
+#pragma mark - Save
+
+
+- (void)performContextSave
+{
+    __weak typeof(self) weakSelf = self;
+    
+    if ([_workerContext hasChanges])
+    {
+        [_workerContext saveContextAsync:NO saveParent:NO withCompletionBlock:^(NSError *error) {
+            if ([weakSelf canceled]) return;
+            
+            if (error) return;
+            
+            [mainMOC() saveContextWithCompletionBlock:^(NSError *error) {
+                NSAssert(error == nil, @"Error saving main moc");
+                [weakSelf saveStackedRequestsIDs];
+                [weakSelf saveStackedRequestsLastUpdateTime];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf loadDidFinishWithError:nil canceled:NO forceNewData:YES];
+                });
+            }];
+        }];
+    }
+    else
+    {
+        NSLog(@"No need to save because there are no changes in context.");
+        
+        [self saveStackedRequestsLastUpdateTime];
+        [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
+    }
 }
 
 
