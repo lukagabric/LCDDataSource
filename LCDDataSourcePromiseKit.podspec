@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "LCDDataSource"
+  s.name         = "LCDDataSourcePromiseKit"
   s.version      = "1.0"
   s.platform     = :ios, '6.0'
   s.source       = { :git => 'https://github.com/lukagabric/LCDDataSource'}
