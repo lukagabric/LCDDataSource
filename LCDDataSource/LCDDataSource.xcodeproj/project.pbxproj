@@ -13,8 +13,8 @@
 		412DAF3418E99F0100A31112 /* LReachabilityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3018E99F0100A31112 /* LReachabilityController.m */; };
 		412DAF3918E99F3E00A31112 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3818E99F3E00A31112 /* Reachability.m */; };
 		4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */; };
-		41649CA719BCB7F6009278DB /* LDataUpdateOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41649CA619BCB7F6009278DB /* LDataUpdateOperationManager.m */; };
-		41DA664C19BBBBF0008BAB85 /* LDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA664B19BBBBF0008BAB85 /* LDataUpdateOperation.m */; };
+		41764E3619C081FC007C0B00 /* LDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */; };
+		41764E3719C081FC007C0B00 /* LDataUpdateOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */; };
 		41DCE30B18DB835A00EFFF5C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */; };
 		41F90001189105B600E20929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F90000189105B600E20929 /* CoreData.framework */; };
 		41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41F900A91891074E00E20929 /* LCDDataSource.xcdatamodeld */; };
@@ -65,11 +65,11 @@
 		412DAF3818E99F3E00A31112 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		4159C43B18ED21C50039AD52 /* LAbstractCDJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDJSONParser.h; sourceTree = "<group>"; };
 		4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDJSONParser.m; sourceTree = "<group>"; };
-		41649CA519BCB7F6009278DB /* LDataUpdateOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationManager.h; sourceTree = "<group>"; };
-		41649CA619BCB7F6009278DB /* LDataUpdateOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperationManager.m; sourceTree = "<group>"; };
-		41649CA819BCEA73009278DB /* LDataUpdateOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationDelegate.h; sourceTree = "<group>"; };
-		41DA664A19BBBBF0008BAB85 /* LDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperation.h; sourceTree = "<group>"; };
-		41DA664B19BBBBF0008BAB85 /* LDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperation.m; sourceTree = "<group>"; };
+		41764E3119C081FC007C0B00 /* LDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperation.h; sourceTree = "<group>"; };
+		41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperation.m; sourceTree = "<group>"; };
+		41764E3319C081FC007C0B00 /* LDataUpdateOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationDelegate.h; sourceTree = "<group>"; };
+		41764E3419C081FC007C0B00 /* LDataUpdateOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationManager.h; sourceTree = "<group>"; };
+		41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperationManager.m; sourceTree = "<group>"; };
 		41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F90000189105B600E20929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41F90018189105B600E20929 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -202,16 +202,16 @@
 			path = External/LReachabilityController/LReachabilityController/Classes/Core/Reachability;
 			sourceTree = "<group>";
 		};
-		41DA664619BBBB97008BAB85 /* LAbstractDataController */ = {
+		41764E3019C081FC007C0B00 /* LDataUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				41DA664A19BBBBF0008BAB85 /* LDataUpdateOperation.h */,
-				41DA664B19BBBBF0008BAB85 /* LDataUpdateOperation.m */,
-				41649CA819BCEA73009278DB /* LDataUpdateOperationDelegate.h */,
-				41649CA519BCB7F6009278DB /* LDataUpdateOperationManager.h */,
-				41649CA619BCB7F6009278DB /* LDataUpdateOperationManager.m */,
+				41764E3119C081FC007C0B00 /* LDataUpdateOperation.h */,
+				41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */,
+				41764E3319C081FC007C0B00 /* LDataUpdateOperationDelegate.h */,
+				41764E3419C081FC007C0B00 /* LDataUpdateOperationManager.h */,
+				41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */,
 			);
-			path = LAbstractDataController;
+			path = LDataUpdate;
 			sourceTree = "<group>";
 		};
 		41F90002189105B600E20929 /* LCDDataSource */ = {
@@ -248,11 +248,11 @@
 		41F900AD1891074E00E20929 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				41764E3019C081FC007C0B00 /* LDataUpdate */,
 				412DAF2A18E99E7600A31112 /* LAbstractCDViewController */,
 				41F900AE1891074E00E20929 /* ASIHTTPRequest */,
 				41F900C51891074E00E20929 /* ClassExtensions */,
 				41F900D01891074E00E20929 /* LAbstractCDParser */,
-				41DA664619BBBB97008BAB85 /* LAbstractDataController */,
 				41F900D91891074E00E20929 /* LCoreDataController */,
 				41F900DC1891074E00E20929 /* MBProgressHUD */,
 			);
@@ -531,6 +531,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41764E3719C081FC007C0B00 /* LDataUpdateOperationManager.m in Sources */,
 				41F901131891074F00E20929 /* ContactDetailsViewController.m in Sources */,
 				41F901041891074E00E20929 /* ASIFormDataRequest.m in Sources */,
 				412DAF3418E99F0100A31112 /* LReachabilityController.m in Sources */,
@@ -538,11 +539,10 @@
 				41F9010D1891074F00E20929 /* LAbstractCDParser.m in Sources */,
 				41F9011C1891074F00E20929 /* Contact.m in Sources */,
 				41F900FF1891074E00E20929 /* main.m in Sources */,
-				41DA664C19BBBBF0008BAB85 /* LDataUpdateOperation.m in Sources */,
+				41764E3619C081FC007C0B00 /* LDataUpdateOperation.m in Sources */,
 				41F901001891074E00E20929 /* ASIAuthenticationDialog.m in Sources */,
 				4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */,
 				41F901151891074F00E20929 /* ContactsViewController.m in Sources */,
-				41649CA719BCB7F6009278DB /* LDataUpdateOperationManager.m in Sources */,
 				41F901111891074F00E20929 /* MBProgressHUD.m in Sources */,
 				41F9011B1891074F00E20929 /* Contact+CD.m in Sources */,
 				41F901071891074F00E20929 /* ASINetworkQueue.m in Sources */,
