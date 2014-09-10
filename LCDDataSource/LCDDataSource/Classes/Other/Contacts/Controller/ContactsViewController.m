@@ -32,7 +32,6 @@
     
     _contactsDataManager = [DataSourceFactory contactsDataManagerWithActivityView:self.view];
     [_contactsDataManager updateDataWithCompletionBlock:^(NSError *error, BOOL newData) {
-//    [_contactsDataManager updateDataIgnoringCacheIntervalWithCompletionBlock:^(NSError *error, BOOL newData) {
         [weakSelf displayData];
     }];
 }
