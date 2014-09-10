@@ -35,7 +35,7 @@
             if (error)
                 reject(error);
             else
-                fulfill(parsedItems);
+                fulfill(@(newData));
         }];
     }];
     
