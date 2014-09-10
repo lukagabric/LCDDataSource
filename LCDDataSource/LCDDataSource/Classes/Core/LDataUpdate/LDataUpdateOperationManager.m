@@ -194,9 +194,7 @@ static NSOperationQueue *dataUpdateQueue;
             [self performSave];
         else
             [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
-    }
-    
-    NSLog(@"- (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error");
+    }    
 }
 
 
