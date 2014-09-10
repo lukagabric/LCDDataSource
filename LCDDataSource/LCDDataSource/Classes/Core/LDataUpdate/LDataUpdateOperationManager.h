@@ -50,6 +50,7 @@
 
 - (void)createWorkerContext;
 - (void)freeWorkerContext;
+- (void)performSave;
 - (LDataUpdateOperation *)operationForRequest:(ASIHTTPRequest *)request;
 
 

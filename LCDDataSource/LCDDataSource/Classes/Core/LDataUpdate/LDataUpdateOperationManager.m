@@ -191,7 +191,7 @@ static NSOperationQueue *dataUpdateQueue;
     else if (operation.request == [_stackedRequests lastObject])
     {
         if (_saveAfterLoad)
-            [self performContextSave];
+            [self performSave];
         else
             [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
     }
@@ -255,7 +255,7 @@ static NSOperationQueue *dataUpdateQueue;
 #pragma mark - Save
 
 
-- (void)performContextSave
+- (void)performSave
 {
     __weak typeof(self) weakSelf = self;
     
