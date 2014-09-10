@@ -170,6 +170,8 @@ static NSOperationQueue *dataUpdateQueue;
         return;
     }
     
+    if (_finished || _canceled) return;
+    
     [self loadDidFinishWithError:nil canceled:YES forceNewData:NO];
     
     for (LDataUpdateOperation *operation in _operations)
