@@ -31,11 +31,11 @@
 - (PMKPromise *)dataUpdateIgnoringCacheIntervalPromise
 {
     PMKPromise *promise = [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
-        [self updateDataIgnoringCacheIntervalWithCompletionBlock:^(ASIHTTPRequest *asiHttpRequest, NSArray *parsedItems, NSError *error) {
+        [self updateDataIgnoringCacheIntervalWithCompletionBlock:^(NSError *error, BOOL newData) {
             if (error)
                 reject(error);
             else
-                fulfill(parsedItems);
+                fulfill(@(newData));
         }];
     }];
     
