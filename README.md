@@ -5,28 +5,6 @@ LCDDataSource is used to simplify the process of getting remote data and storing
 
 ASIHTTPRequest is used for data download.
 
-LAbstractStackedRequestsSource
-------------------------------
-
-The idea is to use the data source by calling a method of the structure below. Method -stackedRequests returns an array of requests that will be performed in a given order, convenient for foreign keys etc. It is possible to set cache intervals for entire set of dependant requests. If one of the requests fails, all data is discarded.
-
-    - (ASIHTTPRequest *)contactRequest
-    {
-        return [LAbstractStackedRequestsSource stackedRequestWithUrl:@"https://dl.dropboxusercontent.com/u/18883987/lions/contacts1.xml"
-                                           timeoutInterval:5
-                                                   headers:nil
-                                                parameters:nil
-                                             requestMethod:@"GET"
-                                                       key:@"Contacts"
-                                               parserClass:[ContactsParser class]];
-    }
-
-
-    - (NSArray *)stackedRequests
-    {
-        return @[[self contactRequest]];
-    }
-    
 LAbstractCDParser
 -----------------
 
