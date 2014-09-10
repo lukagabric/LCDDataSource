@@ -50,9 +50,9 @@
         if ([self isCancelled]) return;
         
         [_request startSynchronous];
-
+        
         if ([self isCancelled]) return;
-
+        
         if (_request.error || ![_dataUpdateDelegate operation:self isResponseValidForRequest:_request])
         {
             [self finishOperationWithError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"request": _request}]];
@@ -67,16 +67,8 @@
             parsingError = [self parseData];
         
         if ([self isCancelled]) return;
-
-        if (parsingError)
-        {
-            [self finishOperationWithError:parsingError];
-            return;
-        }
-
-        if ([self isCancelled]) return;
-
-        [self finishOperationWithError:nil];
+        
+        [self finishOperationWithError:parsingError];
     }
 }
 
