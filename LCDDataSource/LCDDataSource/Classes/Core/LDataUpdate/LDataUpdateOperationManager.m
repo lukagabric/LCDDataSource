@@ -123,6 +123,8 @@ static NSOperationQueue *dataUpdateQueue;
     
     if (_running) return;
     
+    _updateCompletionBlock = [completionBlock copy];
+    
     [self loadDidStart];
     
     if ([self isStackedRequestsDataStale] || ignoreCacheInterval)
@@ -135,8 +137,6 @@ static NSOperationQueue *dataUpdateQueue;
             [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
             return;
         }
-        
-        _updateCompletionBlock = [completionBlock copy];
         
         NSMutableArray *operations = [NSMutableArray new];
         
