@@ -13,8 +13,8 @@
 		412DAF3418E99F0100A31112 /* LReachabilityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3018E99F0100A31112 /* LReachabilityController.m */; };
 		412DAF3918E99F3E00A31112 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3818E99F3E00A31112 /* Reachability.m */; };
 		4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */; };
-		41649CA719BCB7F6009278DB /* LAbstractStackedRequestsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 41649CA619BCB7F6009278DB /* LAbstractStackedRequestsSource.m */; };
-		41DA664C19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA664B19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m */; };
+		41649CA719BCB7F6009278DB /* LDataUpdateOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41649CA619BCB7F6009278DB /* LDataUpdateOperationManager.m */; };
+		41DA664C19BBBBF0008BAB85 /* LDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DA664B19BBBBF0008BAB85 /* LDataUpdateOperation.m */; };
 		41DCE30B18DB835A00EFFF5C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */; };
 		41F90001189105B600E20929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F90000189105B600E20929 /* CoreData.framework */; };
 		41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41F900A91891074E00E20929 /* LCDDataSource.xcdatamodeld */; };
@@ -37,7 +37,7 @@
 		41F901141891074F00E20929 /* ContactDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F900E71891074E00E20929 /* ContactDetailsViewController.xib */; };
 		41F901151891074F00E20929 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900E91891074E00E20929 /* ContactsViewController.m */; };
 		41F901161891074F00E20929 /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F900EA1891074E00E20929 /* ContactsViewController.xib */; };
-		41F901171891074F00E20929 /* ContactsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900ED1891074E00E20929 /* ContactsDataSource.m */; };
+		41F901171891074F00E20929 /* DataSourceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900ED1891074E00E20929 /* DataSourceFactory.m */; };
 		41F901181891074F00E20929 /* ContactsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900EF1891074E00E20929 /* ContactsParser.m */; };
 		41F901191891074F00E20929 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900F41891074E00E20929 /* HomeViewController.m */; };
 		41F9011A1891074F00E20929 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F900F51891074E00E20929 /* HomeViewController.xib */; };
@@ -65,11 +65,11 @@
 		412DAF3818E99F3E00A31112 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		4159C43B18ED21C50039AD52 /* LAbstractCDJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDJSONParser.h; sourceTree = "<group>"; };
 		4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDJSONParser.m; sourceTree = "<group>"; };
-		41649CA519BCB7F6009278DB /* LAbstractStackedRequestsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractStackedRequestsSource.h; sourceTree = "<group>"; };
-		41649CA619BCB7F6009278DB /* LAbstractStackedRequestsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractStackedRequestsSource.m; sourceTree = "<group>"; };
+		41649CA519BCB7F6009278DB /* LDataUpdateOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationManager.h; sourceTree = "<group>"; };
+		41649CA619BCB7F6009278DB /* LDataUpdateOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperationManager.m; sourceTree = "<group>"; };
 		41649CA819BCEA73009278DB /* LDataUpdateOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationDelegate.h; sourceTree = "<group>"; };
-		41DA664A19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractDataUpdateOperation.h; sourceTree = "<group>"; };
-		41DA664B19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractDataUpdateOperation.m; sourceTree = "<group>"; };
+		41DA664A19BBBBF0008BAB85 /* LDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperation.h; sourceTree = "<group>"; };
+		41DA664B19BBBBF0008BAB85 /* LDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperation.m; sourceTree = "<group>"; };
 		41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F90000189105B600E20929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41F90018189105B600E20929 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -115,8 +115,8 @@
 		41F900E81891074E00E20929 /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
 		41F900E91891074E00E20929 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		41F900EA1891074E00E20929 /* ContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactsViewController.xib; sourceTree = "<group>"; };
-		41F900EC1891074E00E20929 /* ContactsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDataSource.h; sourceTree = "<group>"; };
-		41F900ED1891074E00E20929 /* ContactsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSource.m; sourceTree = "<group>"; };
+		41F900EC1891074E00E20929 /* DataSourceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSourceFactory.h; sourceTree = "<group>"; };
+		41F900ED1891074E00E20929 /* DataSourceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSourceFactory.m; sourceTree = "<group>"; };
 		41F900EE1891074E00E20929 /* ContactsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsParser.h; sourceTree = "<group>"; };
 		41F900EF1891074E00E20929 /* ContactsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsParser.m; sourceTree = "<group>"; };
 		41F900F31891074E00E20929 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -205,11 +205,11 @@
 		41DA664619BBBB97008BAB85 /* LAbstractDataController */ = {
 			isa = PBXGroup;
 			children = (
-				41DA664A19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.h */,
-				41DA664B19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m */,
-				41649CA519BCB7F6009278DB /* LAbstractStackedRequestsSource.h */,
-				41649CA619BCB7F6009278DB /* LAbstractStackedRequestsSource.m */,
+				41DA664A19BBBBF0008BAB85 /* LDataUpdateOperation.h */,
+				41DA664B19BBBBF0008BAB85 /* LDataUpdateOperation.m */,
 				41649CA819BCEA73009278DB /* LDataUpdateOperationDelegate.h */,
+				41649CA519BCB7F6009278DB /* LDataUpdateOperationManager.h */,
+				41649CA619BCB7F6009278DB /* LDataUpdateOperationManager.m */,
 			);
 			path = LAbstractDataController;
 			sourceTree = "<group>";
@@ -360,12 +360,12 @@
 		41F900E41891074E00E20929 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				41F900E51891074E00E20929 /* ContactDetailsViewController.h */,
-				41F900E61891074E00E20929 /* ContactDetailsViewController.m */,
-				41F900E71891074E00E20929 /* ContactDetailsViewController.xib */,
 				41F900E81891074E00E20929 /* ContactsViewController.h */,
 				41F900E91891074E00E20929 /* ContactsViewController.m */,
 				41F900EA1891074E00E20929 /* ContactsViewController.xib */,
+				41F900E51891074E00E20929 /* ContactDetailsViewController.h */,
+				41F900E61891074E00E20929 /* ContactDetailsViewController.m */,
+				41F900E71891074E00E20929 /* ContactDetailsViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -373,8 +373,8 @@
 		41F900EB1891074E00E20929 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				41F900EC1891074E00E20929 /* ContactsDataSource.h */,
-				41F900ED1891074E00E20929 /* ContactsDataSource.m */,
+				41F900EC1891074E00E20929 /* DataSourceFactory.h */,
+				41F900ED1891074E00E20929 /* DataSourceFactory.m */,
 				41F900EE1891074E00E20929 /* ContactsParser.h */,
 				41F900EF1891074E00E20929 /* ContactsParser.m */,
 				412AB6A118ED27180065D3F5 /* ContactsJSONParser.h */,
@@ -538,11 +538,11 @@
 				41F9010D1891074F00E20929 /* LAbstractCDParser.m in Sources */,
 				41F9011C1891074F00E20929 /* Contact.m in Sources */,
 				41F900FF1891074E00E20929 /* main.m in Sources */,
-				41DA664C19BBBBF0008BAB85 /* LAbstractDataUpdateOperation.m in Sources */,
+				41DA664C19BBBBF0008BAB85 /* LDataUpdateOperation.m in Sources */,
 				41F901001891074E00E20929 /* ASIAuthenticationDialog.m in Sources */,
 				4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */,
 				41F901151891074F00E20929 /* ContactsViewController.m in Sources */,
-				41649CA719BCB7F6009278DB /* LAbstractStackedRequestsSource.m in Sources */,
+				41649CA719BCB7F6009278DB /* LDataUpdateOperationManager.m in Sources */,
 				41F901111891074F00E20929 /* MBProgressHUD.m in Sources */,
 				41F9011B1891074F00E20929 /* Contact+CD.m in Sources */,
 				41F901071891074F00E20929 /* ASINetworkQueue.m in Sources */,
@@ -553,7 +553,7 @@
 				41F901061891074F00E20929 /* ASIInputStream.m in Sources */,
 				41F901011891074E00E20929 /* ASIDataCompressor.m in Sources */,
 				41F9010B1891074F00E20929 /* NSManagedObjectContext+L.m in Sources */,
-				41F901171891074F00E20929 /* ContactsDataSource.m in Sources */,
+				41F901171891074F00E20929 /* DataSourceFactory.m in Sources */,
 				41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */,
 				41F901181891074F00E20929 /* ContactsParser.m in Sources */,
 				41F901101891074F00E20929 /* LCoreDataController.m in Sources */,

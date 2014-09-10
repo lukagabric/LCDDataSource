@@ -10,15 +10,16 @@
 #define LCDDataSource_LDataUpdateOperationDelegate_h
 
 
-@class LAbstractDataUpdateOperation;
+@class LDataUpdateOperation;
 
 
 @protocol LDataUpdateOperationDelegate <NSObject>
 
 
-- (BOOL)isDataNewForRequest:(ASIHTTPRequest *)request;
-- (BOOL)isResponseValidForRequest:(ASIHTTPRequest *)request;
-- (void)dataUpdateOperation:(LAbstractDataUpdateOperation *)operation didFinishWithError:(NSError *)error;
+- (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error;
+- (BOOL)operation:(LDataUpdateOperation *)operation isDataNewForRequest:(ASIHTTPRequest *)request;
+- (BOOL)operation:(LDataUpdateOperation *)operation isResponseValidForRequest:(ASIHTTPRequest *)request;
+- (void)operation:(LDataUpdateOperation *)operation didPerformSaveWithNewData:(BOOL)newData;
 
 
 @end

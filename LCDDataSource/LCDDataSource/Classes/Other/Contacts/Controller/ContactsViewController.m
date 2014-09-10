@@ -1,7 +1,7 @@
 #import "ContactsViewController.h"
 #import "Contact+CD.h"
 #import "ContactDetailsViewController.h"
-#import "ContactsDataSource.h"
+#import "DataSourceFactory.h"
 
 
 @implementation ContactsViewController
@@ -27,13 +27,11 @@
     
     __weak typeof(self) weakSelf = self;
 
-    if (_dataSource)
-        [_dataSource cancelLoad];
+    if (_contactsDataManager)
+        [_contactsDataManager cancelLoad];
     
-    _dataSource = [ContactsDataSource new];
-    _dataSource.activityView = self.view;
-    _dataSource.saveAfterLoad = YES;
-    [_dataSource updateDataWithCompletionBlock:^(NSError *error, BOOL newData) {
+    _contactsDataManager = [DataSourceFactory contactsDataManagerWithActivityView:self.view];
+    [_contactsDataManager updateDataWithCompletionBlock:^(NSError *error, BOOL newData) {
         [weakSelf displayData];
     }];
 }

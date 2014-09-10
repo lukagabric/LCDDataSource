@@ -1,18 +1,18 @@
-#import "ContactsDataSource.h"
+#import "DataSourceFactory.h"
 #import "ContactsParser.h"
 #import "ContactsJSONParser.h"
 
 
-@implementation ContactsDataSource
+@implementation DataSourceFactory
 
 
 #define JSON 1
 
 
-- (ASIHTTPRequest *)contactRequest
++ (ASIHTTPRequest *)contactRequest
 {
 #if JSON
-    return [LAbstractStackedRequestsSource stackedRequestWithUrl:@"http://lukagabric.com/wp-content/uploads/2014/03/contacts.json"
+    return [LDataUpdateOperationManager stackedRequestWithUrl:@"http://lukagabric.com/wp-content/uploads/2014/03/contacts.json"
                                                  timeoutInterval:5
                                                          headers:nil
                                                       parameters:nil
@@ -31,9 +31,12 @@
 }
 
 
-- (NSArray *)stackedRequests
++ (LDataUpdateOperationManager *)contactsDataManagerWithActivityView:(UIView *)activityView
 {
-    return @[[self contactRequest]];
+    LDataUpdateOperationManager *contactsDataManager = [[LDataUpdateOperationManager alloc] initWithStackedRequests:@[[self contactRequest]]];
+    contactsDataManager.activityView = activityView;
+    
+    return contactsDataManager;
 }
 
 

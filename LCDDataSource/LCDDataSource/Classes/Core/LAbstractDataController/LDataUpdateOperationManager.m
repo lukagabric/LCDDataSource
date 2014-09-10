@@ -7,19 +7,18 @@
 //
 
 
-#import "LAbstractStackedRequestsSource.h"
+#import "LDataUpdateOperationManager.h"
 #import "ASIDownloadCache.h"
 #import "LCoreDataController.h"
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
-#import "LAbstractDataUpdateOperation.h"
 #import "MBProgressHUD.h"
 
 
 #define kStackedRequestsLastUpdateTimeFormat @"StackedRequestsLastUpdateTime.%@"
 
 
-@implementation LAbstractStackedRequestsSource
+@implementation LDataUpdateOperationManager
 
 
 #pragma mark - Init & dealloc
@@ -39,11 +38,12 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-- (id)init
+- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests
 {
 	self = [super init];
 	if (self)
 	{
+        _stackedRequests = [stackedRequests copy];
         [self initialize];
 	}
 	return self;
@@ -54,6 +54,7 @@ static NSOperationQueue *dataUpdateQueue;
 {
     [self createWorkerContext];
     _saveAfterLoad = YES;
+    _stackedRequestsSecondsToCache = 900;
 }
 
 
@@ -128,9 +129,8 @@ static NSOperationQueue *dataUpdateQueue;
     {
         if (_activityView)
             [self showProgressForActivityView];
-    
-        _sourceStackedRequests = [self stackedRequests];
-        if ([_sourceStackedRequests count] == 0)
+    ;
+        if ([_stackedRequests count] == 0)
         {
             [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
             return;
@@ -140,8 +140,8 @@ static NSOperationQueue *dataUpdateQueue;
         
         NSMutableArray *operations = [NSMutableArray new];
         
-        for (ASIHTTPRequest *request in _sourceStackedRequests)
-            [operations addObject:[[LAbstractDataUpdateOperation alloc] initWithDataUpdateDelegate:self context:_workerContext andRequest:request]];
+        for (ASIHTTPRequest *request in _stackedRequests)
+            [operations addObject:[self operationForRequest:request]];
         
         _operations = [operations copy];
         
@@ -152,19 +152,13 @@ static NSOperationQueue *dataUpdateQueue;
         NSDate *lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, NSStringFromClass([self class])]];
         
         NSTimeInterval lastUpdateInterval = [lastUpdateDate timeIntervalSinceReferenceDate];
-        NSTimeInterval staleAtInterval = lastUpdateInterval + [self stackedRequestsSecondsToCache];
+        NSTimeInterval staleAtInterval = lastUpdateInterval + _stackedRequestsSecondsToCache;
         NSTimeInterval currentTimeInterval = [[NSDate date] timeIntervalSinceReferenceDate];
         NSTimeInterval dataValidForInterval = staleAtInterval - currentTimeInterval;
 
-        NSLog(@"Not updating because data is not stale. Stacked requests seconds to cache is set to %ld second(s). Last update was at %@ so data is valid for another %.0f second(s).", [self stackedRequestsSecondsToCache], lastUpdateDate, dataValidForInterval);
+        NSLog(@"Not updating because data is not stale. Stacked requests seconds to cache is set to %ld second(s). Last update was at %@ so data is valid for another %.0f second(s).", _stackedRequestsSecondsToCache, lastUpdateDate, dataValidForInterval);
         [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
     }
-}
-
-
-- (NSArray *)stackedRequests
-{
-    return nil;
 }
 
 
@@ -174,7 +168,7 @@ static NSOperationQueue *dataUpdateQueue;
     
     [self loadDidFinishWithError:nil canceled:YES forceNewData:NO];
     
-    for (LAbstractDataUpdateOperation *operation in _operations)
+    for (LDataUpdateOperation *operation in _operations)
         [operation cancel];
 }
 
@@ -182,31 +176,20 @@ static NSOperationQueue *dataUpdateQueue;
 #pragma mark - LDataUpdateOperationDelegate
 
 
-- (void)dataUpdateOperation:(LAbstractDataUpdateOperation *)operation didFinishWithError:(NSError *)error
+- (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error
 {
     if (_canceled) return;
     
     if (error)
-    {
         [self loadDidFinishWithError:error canceled:NO forceNewData:NO];
-    }
-    else if (operation.request == [_sourceStackedRequests lastObject])
-    {
-        if (_saveAfterLoad)
-            [self saveContextAndStackedRequestsIDs];
-        else
-            [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
-    }
+    else if (operation.request == [_stackedRequests lastObject])
+        [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
+    
+    NSLog(@"- (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error");
 }
 
 
-- (BOOL)isResponseValidForRequest:(ASIHTTPRequest *)request
-{
-    return YES;
-}
-
-
-- (BOOL)isDataNewForRequest:(ASIHTTPRequest *)request
+- (BOOL)operation:(LDataUpdateOperation *)operation isDataNewForRequest:(ASIHTTPRequest *)request
 {
     NSString *key = [request.userInfo objectForKey:@"key"];
     
@@ -223,7 +206,22 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-#pragma mark - Private methods
+- (BOOL)operation:(LDataUpdateOperation *)operation isResponseValidForRequest:(ASIHTTPRequest *)request
+{
+    return YES;
+}
+
+
+- (void)operation:(LDataUpdateOperation *)operation didPerformSaveWithNewData:(BOOL)newData;
+{
+    if (newData)
+        [self saveStackedRequestsIDs];
+    
+    [self saveStackedRequestsLastUpdateTime];
+}
+
+
+#pragma mark - Protected methods
 
 
 - (void)createWorkerContext
@@ -244,25 +242,21 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-#pragma mark - Request ID convenience methods
-
-
-- (NSString *)IDForRequest:(ASIHTTPRequest *)request
+- (LDataUpdateOperation *)operationForRequest:(ASIHTTPRequest *)request
 {
-    NSDictionary *headers = request.responseHeaders;
-    
-    NSString *reqId = [headers objectForKey:@"Etag"];
-    
-    if (!reqId)
-        reqId = [headers objectForKey:@"Last-Modified"];
-    
-    return reqId;
+    return [[LDataUpdateOperation alloc] initWithDataUpdateDelegate:self
+                                                            request:request
+                                                            context:_workerContext
+                                                        saveContext:_saveAfterLoad && request == [_stackedRequests lastObject]];
 }
+
+
+#pragma mark - Request ID convenience methods
 
 
 - (void)saveStackedRequestsIDs
 {
-    for (ASIHTTPRequest *request in _sourceStackedRequests)
+    for (ASIHTTPRequest *request in _stackedRequests)
         [self saveIDForRequest:request];
 }
 
@@ -290,6 +284,19 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
+- (NSString *)IDForRequest:(ASIHTTPRequest *)request
+{
+    NSDictionary *headers = request.responseHeaders;
+    
+    NSString *reqId = [headers objectForKey:@"Etag"];
+    
+    if (!reqId)
+        reqId = [headers objectForKey:@"Last-Modified"];
+    
+    return reqId;
+}
+
+
 #pragma mark - Last update time
 
 
@@ -304,52 +311,7 @@ static NSOperationQueue *dataUpdateQueue;
 {
     NSDate *lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, NSStringFromClass([self class])]];
     
-    return !lastUpdate || [(NSDate *)[lastUpdate dateByAddingTimeInterval:[self stackedRequestsSecondsToCache]] compare:[NSDate date]] != NSOrderedDescending;
-}
-
-
-- (NSUInteger)stackedRequestsSecondsToCache
-{
-    return 900;
-}
-
-
-#pragma mark - Save updated data
-
-
-- (void)saveContextAndStackedRequestsIDs
-{
-    NSAssert([[NSThread currentThread] isMainThread], @"This method must be called on the main thread.");
-    
-    if (_canceled) return;
-    
-    __weak typeof(self) weakSelf = self;
-    
-    if ([_workerContext hasChanges])
-    {
-        [_workerContext saveContextAsync:NO saveParent:NO withCompletionBlock:^(NSError *error) {
-            if (weakSelf.canceled) return;
-
-            [weakSelf loadDidFinishWithError:error canceled:NO forceNewData:YES];
-            
-            if (error) return;
-            
-            [mainMOC() saveContextWithCompletionBlock:^(NSError *error) {
-                [weakSelf saveStackedRequestsIDs];
-                [weakSelf saveStackedRequestsLastUpdateTime];
-            }];
-        }];
-    }
-    else
-    {
-        NSLog(@"No need to save because there are no changes in context.");
-        
-        [self saveStackedRequestsLastUpdateTime];
-        
-        if (_canceled) return;
-        
-        [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
-    }
+    return !lastUpdate || [(NSDate *)[lastUpdate dateByAddingTimeInterval:_stackedRequestsSecondsToCache] compare:[NSDate date]] != NSOrderedDescending;
 }
 
 

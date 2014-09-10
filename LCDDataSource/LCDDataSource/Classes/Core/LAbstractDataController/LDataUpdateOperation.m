@@ -7,19 +7,22 @@
 //
 
 
-#import "LAbstractDataUpdateOperation.h"
+#import "LDataUpdateOperation.h"
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
 #import "LCoreDataController.h"
 
 
-@implementation LAbstractDataUpdateOperation
+@implementation LDataUpdateOperation
 
 
 #pragma mark - Init
 
 
-- (instancetype)initWithDataUpdateDelegate:(id <LDataUpdateOperationDelegate>)dataUpdateDelegate context:(NSManagedObjectContext *)context andRequest:(ASIHTTPRequest *)request
+- (instancetype)initWithDataUpdateDelegate:(id <LDataUpdateOperationDelegate>)dataUpdateDelegate
+                                   request:(ASIHTTPRequest *)request
+                                   context:(NSManagedObjectContext *)context
+                               saveContext:(BOOL)saveContext
 {
     self = [super init];
     if (self)
@@ -27,6 +30,7 @@
         _dataUpdateDelegate = dataUpdateDelegate;
         _workerContext = context;
         _request = request;
+        _saveContext = saveContext;
     }
     return self;
 }
@@ -51,7 +55,7 @@
 
         if ([self isCancelled]) return;
 
-        if (_request.error || ![_dataUpdateDelegate isResponseValidForRequest:_request])
+        if (_request.error || ![_dataUpdateDelegate operation:self isResponseValidForRequest:_request])
         {
             [self handleError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"request": _request}]];
             return;
@@ -61,7 +65,7 @@
         
         NSError *parsingError;
         
-        if ([_dataUpdateDelegate isDataNewForRequest:_request])
+        if ([_dataUpdateDelegate operation:self isDataNewForRequest:_request])
             parsingError = [self parseData];
         
         if ([self isCancelled]) return;
@@ -71,9 +75,14 @@
             [self handleError:parsingError];
             return;
         }
+
+        if ([self isCancelled]) return;
+
+        if (_saveContext)
+            [self performContextSave];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [_dataUpdateDelegate dataUpdateOperation:self didFinishWithError:nil];            
+            [_dataUpdateDelegate operation:self didFinishWithError:nil];
         });
     }
 }
@@ -84,7 +93,7 @@
 
 - (NSError *)parseData
 {
-    __weak LAbstractDataUpdateOperation *weakSelf = self;
+    __weak LDataUpdateOperation *weakSelf = self;
     __weak ASIHTTPRequest *weakRequest = _request;
     __weak NSManagedObjectContext *weakContext = _workerContext;
     __block NSError *error;
@@ -152,12 +161,41 @@
 }
 
 
+#pragma mark - Save
+
+
+- (void)performContextSave
+{
+    __weak typeof(self) weakSelf = self;
+    
+    if ([_workerContext hasChanges])
+    {
+        [_workerContext saveContextAsync:NO saveParent:NO withCompletionBlock:^(NSError *error) {
+            if ([weakSelf isCancelled]) return;
+            
+            if (error) return;
+            
+            [mainMOC() saveContextWithCompletionBlock:^(NSError *error) {
+                NSAssert(error == nil, @"Error saving main moc");
+                [weakSelf.dataUpdateDelegate operation:weakSelf didPerformSaveWithNewData:YES];
+            }];
+        }];
+    }
+    else
+    {
+        NSLog(@"No need to save because there are no changes in context.");
+        
+        [weakSelf.dataUpdateDelegate operation:weakSelf didPerformSaveWithNewData:NO];
+    }
+}
+
+
 #pragma mark - Handle error
 
 
 - (void)handleError:(NSError *)error
 {
-    [_dataUpdateDelegate dataUpdateOperation:self didFinishWithError:error];
+    [_dataUpdateDelegate operation:self didFinishWithError:error];
 }
 
 

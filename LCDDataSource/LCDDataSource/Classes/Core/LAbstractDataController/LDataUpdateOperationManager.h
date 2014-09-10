@@ -9,9 +9,10 @@
 
 #import "ASIHTTPRequest.h"
 #import "LDataUpdateOperationDelegate.h"
+#import "LDataUpdateOperation.h"
 
 
-@interface LAbstractStackedRequestsSource : NSObject <LDataUpdateOperationDelegate>
+@interface LDataUpdateOperationManager : NSObject <LDataUpdateOperationDelegate>
 
 
 @property (readonly, nonatomic) BOOL finished;
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) UIView *activityView;
 
 
+- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests;
+
 - (void)updateDataIgnoringCacheIntervalWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)updateDataWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)cancelLoad;
@@ -35,17 +38,19 @@
 #pragma mark - Protected
 
 
-@interface LAbstractStackedRequestsSource ()
+@interface LDataUpdateOperationManager ()
 
 
 @property (copy, nonatomic) void(^updateCompletionBlock)(NSError *error, BOOL newData);
 @property (strong, nonatomic) NSManagedObjectContext *workerContext;
 @property (strong, nonatomic) NSArray *operations;
-@property (strong, nonatomic) NSArray *sourceStackedRequests;
+@property (strong, nonatomic) NSArray *stackedRequests;
+@property (assign, nonatomic) NSUInteger stackedRequestsSecondsToCache;
 
 
-- (NSArray *)stackedRequests;
-- (NSUInteger)stackedRequestsSecondsToCache;
+- (void)createWorkerContext;
+- (void)freeWorkerContext;
+- (LDataUpdateOperation *)operationForRequest:(ASIHTTPRequest *)request;
 
 
 + (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
