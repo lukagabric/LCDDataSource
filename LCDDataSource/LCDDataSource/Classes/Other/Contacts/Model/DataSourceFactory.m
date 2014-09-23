@@ -33,7 +33,7 @@
 
 + (LDataUpdateOperationManager *)contactsDataManagerWithActivityView:(UIView *)activityView
 {
-    LDataUpdateOperationManager *contactsDataManager = [[LDataUpdateOperationManager alloc] initWithStackedRequests:@[[self contactRequest]]];
+    LDataUpdateOperationManager *contactsDataManager = [[LDataUpdateOperationManager alloc] initWithStackedRequests:@[[self contactRequest]] andGroupId:@"contacts"];
     contactsDataManager.activityView = activityView;
     
     return contactsDataManager;

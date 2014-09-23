@@ -15,7 +15,7 @@
 #import "MBProgressHUD.h"
 
 
-#define kStackedRequestsLastUpdateTimeFormat @"StackedRequestsLastUpdateTime.%@"
+#define kStackedRequestsLastUpdateTimeFormat @"StackedRequestsLastUpdateTime.groupId.%@"
 
 
 @implementation LDataUpdateOperationManager
@@ -38,12 +38,13 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests
+- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests andGroupId:(NSString *)groupId
 {
 	self = [super init];
 	if (self)
 	{
         _stackedRequests = [stackedRequests copy];
+        _groupId = groupId;
         [self initialize];
 	}
 	return self;
@@ -149,7 +150,7 @@ static NSOperationQueue *dataUpdateQueue;
     }
     else
     {
-        NSDate *lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, NSStringFromClass([self class])]];
+        NSDate *lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, _groupId]];
         
         NSTimeInterval lastUpdateInterval = [lastUpdateDate timeIntervalSinceReferenceDate];
         NSTimeInterval staleAtInterval = lastUpdateInterval + _stackedRequestsSecondsToCache;
@@ -338,14 +339,14 @@ static NSOperationQueue *dataUpdateQueue;
 
 - (void)saveStackedRequestsLastUpdateTime
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, NSStringFromClass([self class])]];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, _groupId]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
 - (BOOL)isStackedRequestsDataStale
 {
-    NSDate *lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, NSStringFromClass([self class])]];
+    NSDate *lastUpdate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:kStackedRequestsLastUpdateTimeFormat, _groupId]];
     
     return !lastUpdate || [(NSDate *)[lastUpdate dateByAddingTimeInterval:_stackedRequestsSecondsToCache] compare:[NSDate date]] != NSOrderedDescending;
 }

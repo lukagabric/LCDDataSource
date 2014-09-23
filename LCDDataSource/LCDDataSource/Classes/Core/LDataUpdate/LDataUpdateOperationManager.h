@@ -21,11 +21,13 @@
 @property (readonly, nonatomic) BOOL newData;
 @property (readonly, nonatomic) NSError *error;
 
+@property (readonly, nonatomic) NSString *groupId;
+
 @property (assign, nonatomic) BOOL saveAfterLoad;
 @property (weak, nonatomic) UIView *activityView;
 
 
-- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests;
+- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests andGroupId:(NSString *)groupId;
 
 - (void)updateDataIgnoringCacheIntervalWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)updateDataWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
