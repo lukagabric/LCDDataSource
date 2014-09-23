@@ -99,50 +99,10 @@
         if (error)
             [weakContext reset];
         else
-            [weakSelf parserDidFinish:parser];
+            [weakSelf.dataUpdateDelegate operation:weakSelf parserDidFinish:parser];
     }];
     
     return error;
-}
-
-
-- (void)parserDidFinish:(id <LCDParserInterface>)parser
-{
-    [self deleteItemsNotInSet:[parser getItemsSet]];
-}
-
-
-- (void)deleteItemsNotInSet:(NSSet *)items
-{
-    NSString *entityName = [[[items anyObject] entity] name];
-    
-    if (!entityName || [entityName length] == 0) return;
-    
-    NSFetchRequest *centerRequest = [NSFetchRequest new];
-    
-    centerRequest.entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:_workerContext];
-    centerRequest.includesPropertyValues = NO;
-    
-    NSError *error = nil;
-    
-    NSArray *allObjects = [_workerContext executeFetchRequest:centerRequest error:&error];
-    
-    if (error)
-        return;
-    
-    if ([allObjects count] > 0)
-    {
-        NSMutableSet *setToDelete = [NSMutableSet setWithArray:allObjects];
-        
-        [setToDelete minusSet:items];
-        
-        for (NSManagedObject *managedObjectToDelete in setToDelete)
-        {
-            [_workerContext deleteObject:managedObjectToDelete];
-            
-            NSLog(@"deleted object - %@", managedObjectToDelete);
-        }
-    }
 }
 
 

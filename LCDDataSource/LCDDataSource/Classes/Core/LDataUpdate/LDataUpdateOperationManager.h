@@ -54,6 +54,7 @@
 - (void)freeWorkerContext;
 - (void)performSave;
 - (LDataUpdateOperation *)operationForRequest:(ASIHTTPRequest *)request;
+- (void)deleteOrphanedObjectsWithParser:(id <LCDParserInterface>)parser;
 
 
 + (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url

@@ -11,6 +11,7 @@
 
 
 @class LDataUpdateOperation;
+@protocol LCDParserInterface;
 
 
 @protocol LDataUpdateOperationDelegate <NSObject>
@@ -19,6 +20,7 @@
 - (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error;
 - (BOOL)operation:(LDataUpdateOperation *)operation isDataNewForRequest:(ASIHTTPRequest *)request;
 - (BOOL)operation:(LDataUpdateOperation *)operation isResponseValidForRequest:(ASIHTTPRequest *)request;
+- (void)operation:(LDataUpdateOperation *)operation parserDidFinish:(id <LCDParserInterface>)parser;
 
 
 @end

@@ -16,28 +16,14 @@
 @interface LDataUpdateOperation : NSOperation
 
 
-@property (weak, nonatomic, readonly) id <LDataUpdateOperationDelegate> dataUpdateDelegate;
-@property (nonatomic, readonly) NSManagedObjectContext *workerContext;
-@property (nonatomic, readonly) ASIHTTPRequest *request;
-
-
 - (instancetype)initWithDataUpdateDelegate:(id <LDataUpdateOperationDelegate>)dataUpdateDelegate
                                    request:(ASIHTTPRequest *)request
                                    context:(NSManagedObjectContext *)context;
 
 
-@end
-
-
-#pragma mark - Protected
-
-
-@interface LDataUpdateOperation ()
-
-
-- (NSError *)parseData;
-- (void)parserDidFinish:(id <LCDParserInterface>)parser;
-- (void)deleteItemsNotInSet:(NSSet *)items;
+@property (readonly, nonatomic) id <LDataUpdateOperationDelegate> dataUpdateDelegate;
+@property (readonly, nonatomic) NSManagedObjectContext *workerContext;
+@property (readonly, nonatomic) ASIHTTPRequest *request;
 
 
 @end

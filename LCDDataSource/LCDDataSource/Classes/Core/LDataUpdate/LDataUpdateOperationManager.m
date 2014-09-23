@@ -224,7 +224,49 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
+- (void)operation:(LDataUpdateOperation *)operation parserDidFinish:(id <LCDParserInterface>)parser
+{
+    [self deleteOrphanedObjectsWithParser:parser];
+}
+
+
 #pragma mark - Protected methods
+
+
+- (void)deleteOrphanedObjectsWithParser:(id <LCDParserInterface>)parser
+{
+    NSSet *items = [parser getItemsSet];
+    
+    NSString *entityName = [[[items anyObject] entity] name];
+    
+    if (!entityName || [entityName length] == 0) return;
+    
+    NSFetchRequest *centerRequest = [NSFetchRequest new];
+    
+    centerRequest.entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:_workerContext];
+    centerRequest.includesPropertyValues = NO;
+    
+    NSError *error = nil;
+    
+    NSArray *allObjects = [_workerContext executeFetchRequest:centerRequest error:&error];
+    
+    if (error)
+        return;
+    
+    if ([allObjects count] > 0)
+    {
+        NSMutableSet *setToDelete = [NSMutableSet setWithArray:allObjects];
+        
+        [setToDelete minusSet:items];
+        
+        for (NSManagedObject *managedObjectToDelete in setToDelete)
+        {
+            [_workerContext deleteObject:managedObjectToDelete];
+            
+            NSLog(@"deleted object - %@", managedObjectToDelete);
+        }
+    }
+}
 
 
 - (void)createWorkerContext
