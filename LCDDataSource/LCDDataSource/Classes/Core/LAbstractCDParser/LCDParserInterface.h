@@ -11,10 +11,8 @@
 
 
 - (void)parseData:(NSData *)data;
-- (void)setUserInfo:(id)userInfo;
-- (void)setASIHTTPRequest:(ASIHTTPRequest *)request;
-- (NSError *)getError;
-- (NSSet *)getItemsSet;
+- (NSError *)error;
+- (NSSet *)itemsSet;
 - (void)abortParsing;
 - (void)setContext:(NSManagedObjectContext *)context;
 

@@ -30,10 +30,10 @@
 - (void)initialize
 {
     _dateTimeFormatter = [NSDateFormatter new];
-    _dateTimeFormatter.dateFormat = [self getDateTimeFormat];
+    _dateTimeFormatter.dateFormat = [self dateTimeFormat];
     
     _dateFormatter = [NSDateFormatter new];
-    _dateFormatter.dateFormat = [self getDateFormat];
+    _dateFormatter.dateFormat = [self dateFormat];
 }
 
 
@@ -84,7 +84,7 @@
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
 	_error = parseError;
-	NSLog(@"%@", [NSString stringWithFormat:@"Parsing error code %i, %@, at line: %i, column: %i", [parseError code], [[parser parserError] localizedDescription], [parser lineNumber], [parser columnNumber]]);
+	NSLog(@"Parsing error code %ld, %@, at line: %ld, column: %ld", [parseError code], [[parser parserError] localizedDescription], [parser lineNumber], [parser columnNumber]);
 }
 
 
@@ -138,12 +138,6 @@
 }
 
 
-- (void)setUserInfo:(id)userInfo
-{
-    _userInfo = userInfo;
-}
-
-
 - (void)setASIHTTPRequest:(ASIHTTPRequest *)request
 {
     _request = request;
@@ -153,25 +147,25 @@
 #pragma mark - Getters
 
 
-- (NSString *)getDateFormat
+- (NSString *)dateFormat
 {
     return @"yyyy-MM-dd";
 }
 
 
-- (NSString *)getDateTimeFormat
+- (NSString *)dateTimeFormat
 {
     return @"yyyy-MM-dd hh:mm:ss";
 }
 
 
-- (NSSet *)getItemsSet
+- (NSSet *)itemsSet
 {
 	return [NSSet setWithSet:_itemsSet];
 }
 
 
-- (NSError *)getError
+- (NSError *)error
 {
     return _error;
 }

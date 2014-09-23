@@ -24,7 +24,7 @@
 }
 
 
-- (NSString *)getRootKeyPath
+- (NSString *)rootKeyPath
 {
     return @"contacts.contact";
 }

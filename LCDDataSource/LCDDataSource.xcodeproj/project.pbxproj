@@ -15,6 +15,7 @@
 		4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */; };
 		41764E3619C081FC007C0B00 /* LDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */; };
 		41764E3719C081FC007C0B00 /* LDataUpdateOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */; };
+		417F7CC319D1F56400241685 /* ASIHTTPRequest+L.m in Sources */ = {isa = PBXBuildFile; fileRef = 417F7CC219D1F56400241685 /* ASIHTTPRequest+L.m */; };
 		41DCE30B18DB835A00EFFF5C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */; };
 		41F90001189105B600E20929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F90000189105B600E20929 /* CoreData.framework */; };
 		41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41F900A91891074E00E20929 /* LCDDataSource.xcdatamodeld */; };
@@ -70,6 +71,8 @@
 		41764E3319C081FC007C0B00 /* LDataUpdateOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationDelegate.h; sourceTree = "<group>"; };
 		41764E3419C081FC007C0B00 /* LDataUpdateOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationManager.h; sourceTree = "<group>"; };
 		41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperationManager.m; sourceTree = "<group>"; };
+		417F7CC119D1F56400241685 /* ASIHTTPRequest+L.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASIHTTPRequest+L.h"; sourceTree = "<group>"; };
+		417F7CC219D1F56400241685 /* ASIHTTPRequest+L.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASIHTTPRequest+L.m"; sourceTree = "<group>"; };
 		41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F90000189105B600E20929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41F90018189105B600E20929 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -293,6 +296,8 @@
 				41F900C91891074E00E20929 /* NSManagedObject+L.m */,
 				41F900CA1891074E00E20929 /* NSManagedObjectContext+L.h */,
 				41F900CB1891074E00E20929 /* NSManagedObjectContext+L.m */,
+				417F7CC119D1F56400241685 /* ASIHTTPRequest+L.h */,
+				417F7CC219D1F56400241685 /* ASIHTTPRequest+L.m */,
 			);
 			path = ClassExtensions;
 			sourceTree = "<group>";
@@ -541,6 +546,7 @@
 				41F900FF1891074E00E20929 /* main.m in Sources */,
 				41764E3619C081FC007C0B00 /* LDataUpdateOperation.m in Sources */,
 				41F901001891074E00E20929 /* ASIAuthenticationDialog.m in Sources */,
+				417F7CC319D1F56400241685 /* ASIHTTPRequest+L.m in Sources */,
 				4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */,
 				41F901151891074F00E20929 /* ContactsViewController.m in Sources */,
 				41F901111891074F00E20929 /* MBProgressHUD.m in Sources */,

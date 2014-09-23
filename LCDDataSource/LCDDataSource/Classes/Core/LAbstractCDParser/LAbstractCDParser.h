@@ -53,8 +53,8 @@
 - (void)didStartElement;
 - (void)didEndElement;
 
-- (NSString *)getDateTimeFormat;
-- (NSString *)getDateFormat;
+- (NSString *)dateTimeFormat;
+- (NSString *)dateFormat;
 
 
 @end

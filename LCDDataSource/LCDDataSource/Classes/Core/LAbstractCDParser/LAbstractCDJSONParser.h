@@ -47,12 +47,10 @@
 
 
 - (void)initialize;
-
 - (void)bindObject;
-
-- (NSString *)getDateTimeFormat;
-- (NSString *)getDateFormat;
-- (NSString *)getRootKeyPath;
+- (NSString *)dateTimeFormat;
+- (NSString *)dateFormat;
+- (NSString *)rootKeyPath;
 
 
 @end

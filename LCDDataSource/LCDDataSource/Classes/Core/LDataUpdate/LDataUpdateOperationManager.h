@@ -27,7 +27,7 @@
 @property (weak, nonatomic) UIView *activityView;
 
 
-- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests andGroupId:(NSString *)groupId;
+- (instancetype)initWithUpdateOperations:(NSArray *)updateOperations andGroupId:(NSString *)groupId;
 
 - (void)updateDataIgnoringCacheIntervalWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
 - (void)updateDataWithCompletionBlock:(void(^)(NSError *error, BOOL newData))completionBlock;
@@ -45,16 +45,13 @@
 
 @property (copy, nonatomic) void(^updateCompletionBlock)(NSError *error, BOOL newData);
 @property (strong, nonatomic) NSManagedObjectContext *workerContext;
-@property (strong, nonatomic) NSArray *operations;
-@property (strong, nonatomic) NSArray *stackedRequests;
+@property (strong, nonatomic) NSArray *updateOperations;
 @property (assign, nonatomic) NSUInteger stackedRequestsSecondsToCache;
 
 
 - (void)createWorkerContext;
 - (void)freeWorkerContext;
 - (void)performSave;
-- (LDataUpdateOperation *)operationForRequest:(ASIHTTPRequest *)request;
-- (void)deleteOrphanedObjectsWithParser:(id <LCDParserInterface>)parser;
 
 
 + (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
@@ -62,17 +59,7 @@
                                   headers:(NSDictionary *)headers
                                parameters:(NSDictionary *)params
                             requestMethod:(NSString *)requestMethod
-                                      key:(NSString *)key
-                              parserClass:(Class)parserClass
-                           parserUserInfo:(id)parserUserInfo;
-
-+ (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
-                          timeoutInterval:(NSTimeInterval)timeoutInterval
-                                  headers:(NSDictionary *)headers
-                               parameters:(NSDictionary *)params
-                            requestMethod:(NSString *)requestMethod
-                                      key:(NSString *)key
-                              parserClass:(Class)parserClass;
+                                      key:(NSString *)key;
 
 + (ASIHTTPRequest *)requestWithUrl:(NSString *)url
                    timeoutInterval:(NSTimeInterval)timeoutInterval

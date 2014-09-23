@@ -27,10 +27,10 @@
 - (void)initialize
 {
     _dateTimeFormatter = [NSDateFormatter new];
-    _dateTimeFormatter.dateFormat = [self getDateTimeFormat];
+    _dateTimeFormatter.dateFormat = [self dateTimeFormat];
     
     _dateFormatter = [NSDateFormatter new];
-    _dateFormatter.dateFormat = [self getDateFormat];
+    _dateFormatter.dateFormat = [self dateFormat];
 }
 
 
@@ -62,7 +62,7 @@
         {
             _rootJsonObject = jsonObject;
             
-            NSString *rootKeyPath = [self getRootKeyPath];
+            NSString *rootKeyPath = [self rootKeyPath];
             
             if (rootKeyPath)
                 _rootJsonObject = [jsonObject valueForKeyPath:rootKeyPath];
@@ -113,12 +113,6 @@
 }
 
 
-- (void)setUserInfo:(id)userInfo
-{
-    _userInfo = userInfo;
-}
-
-
 - (void)setASIHTTPRequest:(ASIHTTPRequest *)request
 {
     _request = request;
@@ -128,31 +122,31 @@
 #pragma mark - Getters
 
 
-- (NSString *)getDateFormat
+- (NSString *)dateFormat
 {
     return @"yyyy-MM-dd";
 }
 
 
-- (NSString *)getDateTimeFormat
+- (NSString *)dateTimeFormat
 {
     return @"yyyy-MM-dd hh:mm:ss Z";
 }
 
 
-- (NSSet *)getItemsSet
+- (NSSet *)itemsSet
 {
 	return [NSSet setWithSet:_itemsSet];
 }
 
 
-- (NSError *)getError
+- (NSError *)error
 {
     return _error;
 }
 
 
-- (NSString *)getRootKeyPath
+- (NSString *)rootKeyPath
 {
     return nil;
 }

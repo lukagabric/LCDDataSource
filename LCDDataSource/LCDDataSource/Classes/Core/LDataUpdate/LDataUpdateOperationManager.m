@@ -13,6 +13,7 @@
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
 #import "MBProgressHUD.h"
+#import "ASIHTTPRequest+L.h"
 
 
 #define kStackedRequestsLastUpdateTimeFormat @"StackedRequestsLastUpdateTime.groupId.%@"
@@ -38,12 +39,12 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-- (instancetype)initWithStackedRequests:(NSArray *)stackedRequests andGroupId:(NSString *)groupId
+- (instancetype)initWithUpdateOperations:(NSArray *)updateOperations andGroupId:(NSString *)groupId
 {
 	self = [super init];
 	if (self)
 	{
-        _stackedRequests = [stackedRequests copy];
+        _updateOperations = [updateOperations copy];
         _groupId = groupId;
         [self initialize];
 	}
@@ -56,6 +57,12 @@ static NSOperationQueue *dataUpdateQueue;
     [self createWorkerContext];
     _saveAfterLoad = YES;
     _stackedRequestsSecondsToCache = 900;
+    
+    for (LDataUpdateOperation *operation in _updateOperations)
+    {
+        operation.dataUpdateDelegate = self;
+        operation.workerContext = _workerContext;
+    }
 }
 
 
@@ -133,20 +140,13 @@ static NSOperationQueue *dataUpdateQueue;
         if (_activityView)
             [self showProgressForActivityView];
     ;
-        if ([_stackedRequests count] == 0)
+        if ([_updateOperations count] == 0)
         {
             [self loadDidFinishWithError:nil canceled:NO forceNewData:NO];
             return;
         }
         
-        NSMutableArray *operations = [NSMutableArray new];
-        
-        for (ASIHTTPRequest *request in _stackedRequests)
-            [operations addObject:[self operationForRequest:request]];
-        
-        _operations = [operations copy];
-        
-        [dataUpdateQueue addOperations:_operations waitUntilFinished:NO];
+        [dataUpdateQueue addOperations:_updateOperations waitUntilFinished:NO];
     }
     else
     {
@@ -175,7 +175,7 @@ static NSOperationQueue *dataUpdateQueue;
     
     [self loadDidFinishWithError:nil canceled:YES forceNewData:NO];
     
-    for (LDataUpdateOperation *operation in _operations)
+    for (LDataUpdateOperation *operation in _updateOperations)
         [operation cancel];
 }
 
@@ -191,7 +191,7 @@ static NSOperationQueue *dataUpdateQueue;
     {
         [self loadDidFinishWithError:error canceled:NO forceNewData:NO];
     }
-    else if (operation.request == [_stackedRequests lastObject])
+    else if (operation == [_updateOperations lastObject])
     {
         if (_saveAfterLoad)
             [self performSave];
@@ -201,72 +201,7 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-- (BOOL)operation:(LDataUpdateOperation *)operation isDataNewForRequest:(ASIHTTPRequest *)request
-{
-    NSString *key = [request.userInfo objectForKey:@"key"];
-    
-    NSAssert(key, @"Request needs to have a key for caching.");
-    
-    NSString *previousID = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-    NSString *currentID = [self IDForRequest:request];
-    
-    BOOL isDataNew = !previousID || !currentID || ![previousID isEqualToString:currentID];
-    
-    NSLog(@"Data is %@new for this request.", isDataNew ? @"" : @"NOT ");
-    
-    return isDataNew;
-}
-
-
-- (BOOL)operation:(LDataUpdateOperation *)operation isResponseValidForRequest:(ASIHTTPRequest *)request
-{
-    return YES;
-}
-
-
-- (void)operation:(LDataUpdateOperation *)operation parserDidFinish:(id <LCDParserInterface>)parser
-{
-    [self deleteOrphanedObjectsWithParser:parser];
-}
-
-
 #pragma mark - Protected methods
-
-
-- (void)deleteOrphanedObjectsWithParser:(id <LCDParserInterface>)parser
-{
-    NSSet *items = [parser getItemsSet];
-    
-    NSString *entityName = [[[items anyObject] entity] name];
-    
-    if (!entityName || [entityName length] == 0) return;
-    
-    NSFetchRequest *centerRequest = [NSFetchRequest new];
-    
-    centerRequest.entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:_workerContext];
-    centerRequest.includesPropertyValues = NO;
-    
-    NSError *error = nil;
-    
-    NSArray *allObjects = [_workerContext executeFetchRequest:centerRequest error:&error];
-    
-    if (error)
-        return;
-    
-    if ([allObjects count] > 0)
-    {
-        NSMutableSet *setToDelete = [NSMutableSet setWithArray:allObjects];
-        
-        [setToDelete minusSet:items];
-        
-        for (NSManagedObject *managedObjectToDelete in setToDelete)
-        {
-            [_workerContext deleteObject:managedObjectToDelete];
-            
-            NSLog(@"deleted object - %@", managedObjectToDelete);
-        }
-    }
-}
 
 
 - (void)createWorkerContext
@@ -284,14 +219,6 @@ static NSOperationQueue *dataUpdateQueue;
         [_workerContext reset];
     
     _workerContext = nil;
-}
-
-
-- (LDataUpdateOperation *)operationForRequest:(ASIHTTPRequest *)request
-{
-    return [[LDataUpdateOperation alloc] initWithDataUpdateDelegate:self
-                                                            request:request
-                                                            context:_workerContext];
 }
 
 
@@ -330,49 +257,33 @@ static NSOperationQueue *dataUpdateQueue;
 }
 
 
-#pragma mark - Request ID convenience methods
+#pragma mark - saveStackedRequestsIDs
 
 
 - (void)saveStackedRequestsIDs
 {
-    for (ASIHTTPRequest *request in _stackedRequests)
-        [self saveIDForRequest:request];
-}
-
-
-- (void)saveIDForRequest:(ASIHTTPRequest *)request
-{
-    NSString *key = [request.userInfo objectForKey:@"key"];
-    
-    NSAssert(key, @"Request needs to have a key for caching.");
-    
-    NSString *reqId = [self IDForRequest:request];
-    
-    if (reqId)
+    for (LDataUpdateOperation *operation in _updateOperations)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:reqId forKey:key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        ASIHTTPRequest *request = operation.request;
         
-        NSLog(@"Saved request ID: '%@' for request with key: '%@'", reqId, key);
+        NSString *key = [request.userInfo objectForKey:@"key"];
+        
+        NSAssert(key, @"Request needs to have a key for caching.");
+        
+        NSString *reqId = [request requestEtagOrLastModified];
+        
+        if (reqId)
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:reqId forKey:key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSLog(@"Saved request ID: '%@' for request with key: '%@'", reqId, key);
+        }
+        else
+        {
+            NSLog(@"No ID for request with url: '%@'. Request needs to have ID (e.g. ETag or Last-Modified) for caching.", [request.url absoluteString]);
+        }
     }
-    else
-    {
-        NSLog(@"No ID for request with url: '%@'. Request needs to have ID (e.g. ETag or Last-Modified) for caching.", [request.url absoluteString]);
-    }
-    
-}
-
-
-- (NSString *)IDForRequest:(ASIHTTPRequest *)request
-{
-    NSDictionary *headers = request.responseHeaders;
-    
-    NSString *reqId = [headers objectForKey:@"Etag"];
-    
-    if (!reqId)
-        reqId = [headers objectForKey:@"Last-Modified"];
-    
-    return reqId;
 }
 
 
@@ -444,32 +355,13 @@ static NSOperationQueue *dataUpdateQueue;
                                parameters:(NSDictionary *)params
                             requestMethod:(NSString *)requestMethod
                                       key:(NSString *)key
-                              parserClass:(Class)parserClass
-                           parserUserInfo:(id)parserUserInfo
 {
     return [self requestWithUrl:url
                 timeoutInterval:timeoutInterval
                         headers:headers
                      parameters:params
                   requestMethod:requestMethod
-                       userInfo:@{@"key" : [NSString stringWithFormat:@"ASIHTTPRequest.key.%@", key], @"parserClass" : parserClass, @"parserUserInfo" : parserUserInfo}];
-}
-
-
-+ (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
-                          timeoutInterval:(NSTimeInterval)timeoutInterval
-                                  headers:(NSDictionary *)headers
-                               parameters:(NSDictionary *)params
-                            requestMethod:(NSString *)requestMethod
-                                      key:(NSString *)key
-                              parserClass:(Class)parserClass
-{
-    return [self requestWithUrl:url
-                timeoutInterval:timeoutInterval
-                        headers:headers
-                     parameters:params
-                  requestMethod:requestMethod
-                       userInfo:@{@"key" : [NSString stringWithFormat:@"ASIHTTPRequest.key.%@", key], @"parserClass" : parserClass}];
+                       userInfo:@{@"key" : [NSString stringWithFormat:@"ASIHTTPRequest.key.%@", key]}];
 }
 
 

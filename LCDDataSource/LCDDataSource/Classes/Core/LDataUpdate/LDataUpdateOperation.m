@@ -11,6 +11,7 @@
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
 #import "LCoreDataController.h"
+#import "ASIHTTPRequest+L.h"
 
 
 @implementation LDataUpdateOperation
@@ -19,16 +20,15 @@
 #pragma mark - Init
 
 
-- (instancetype)initWithDataUpdateDelegate:(id <LDataUpdateOperationDelegate>)dataUpdateDelegate
-                                   request:(ASIHTTPRequest *)request
-                                   context:(NSManagedObjectContext *)context
+- (instancetype)initWithRequest:(ASIHTTPRequest *)request andParser:(id <LCDParserInterface>)parser
 {
     self = [super init];
     if (self)
     {
-        _dataUpdateDelegate = dataUpdateDelegate;
-        _workerContext = context;
+        NSAssert(request && parser, @"Dependencies are mandatory");
+
         _request = request;
+        _parser = parser;
     }
     return self;
 }
@@ -53,7 +53,7 @@
         
         if ([self isCancelled]) return;
         
-        if (_request.error || ![_dataUpdateDelegate operation:self isResponseValidForRequest:_request])
+        if (_request.error || ![self isResponseValidForRequest:_request])
         {
             [self finishOperationWithError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"request": _request}]];
             return;
@@ -63,7 +63,7 @@
         
         NSError *parsingError;
         
-        if ([_dataUpdateDelegate operation:self isDataNewForRequest:_request])
+        if ([self isDataNewForRequest:_request])
             parsingError = [self parseData];
         
         if ([self isCancelled]) return;
@@ -81,28 +81,81 @@
     __weak LDataUpdateOperation *weakSelf = self;
     __weak ASIHTTPRequest *weakRequest = _request;
     __weak NSManagedObjectContext *weakContext = _workerContext;
+    __weak id <LCDParserInterface> weakParser = _parser;
     __block NSError *error;
     
     [_workerContext performBlockAndWait:^{
-        Class parserClass = [weakRequest.userInfo objectForKey:@"parserClass"];
+        [weakParser setContext:weakContext];
+        [weakParser parseData:weakRequest.responseData];
         
-        NSAssert(parserClass, @"Parser class must be set with the request");
-        
-        id <LCDParserInterface> parser = [[parserClass class] new];
-        [parser setUserInfo:[weakRequest.userInfo objectForKey:@"parserUserInfo"]];
-        [parser setASIHTTPRequest:weakRequest];
-        [parser setContext:weakContext];
-        [parser parseData:weakRequest.responseData];
-        
-        error = [parser getError];
+        error = [weakParser error];
         
         if (error)
             [weakContext reset];
         else
-            [weakSelf.dataUpdateDelegate operation:weakSelf parserDidFinish:parser];
+            [weakSelf deleteOrphanedObjectsWithParser:weakParser];
     }];
     
     return error;
+}
+
+
+- (void)deleteOrphanedObjectsWithParser:(id <LCDParserInterface>)parser
+{
+    NSSet *items = [parser itemsSet];
+    
+    NSString *entityName = [[[items anyObject] entity] name];
+    
+    if (!entityName || [entityName length] == 0) return;
+    
+    NSFetchRequest *centerRequest = [NSFetchRequest new];
+    
+    centerRequest.entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:_workerContext];
+    centerRequest.includesPropertyValues = NO;
+    
+    NSError *error = nil;
+    
+    NSArray *allObjects = [_workerContext executeFetchRequest:centerRequest error:&error];
+    
+    if (error)
+        return;
+    
+    if ([allObjects count] > 0)
+    {
+        NSMutableSet *setToDelete = [NSMutableSet setWithArray:allObjects];
+        
+        [setToDelete minusSet:items];
+        
+        for (NSManagedObject *managedObjectToDelete in setToDelete)
+        {
+            [_workerContext deleteObject:managedObjectToDelete];
+            
+            NSLog(@"deleted object - %@", managedObjectToDelete);
+        }
+    }
+}
+
+
+- (BOOL)isDataNewForRequest:(ASIHTTPRequest *)request
+{
+    NSString *key = [request.userInfo objectForKey:@"key"];
+    
+    NSAssert(key, @"Request needs to have a key for caching.");
+    
+    NSString *previousID = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSString *currentID = [request requestEtagOrLastModified];
+    
+    BOOL isDataNew = !previousID || !currentID || ![previousID isEqualToString:currentID];
+    
+    NSLog(@"Data is %@new for this request.", isDataNew ? @"" : @"NOT ");
+    
+    return isDataNew;
+}
+
+
+- (BOOL)isResponseValidForRequest:(ASIHTTPRequest *)request
+{
+    return YES;
 }
 
 
@@ -128,6 +181,7 @@
         {
             [super cancel];
             [_request clearDelegatesAndCancel];
+            [_parser abortParsing];
         }
     }
 }
