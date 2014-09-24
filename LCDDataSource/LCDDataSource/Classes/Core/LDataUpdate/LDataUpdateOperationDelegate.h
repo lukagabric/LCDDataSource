@@ -11,7 +11,6 @@
 
 
 @class LDataUpdateOperation;
-@protocol LCDParserInterface;
 
 
 @protocol LDataUpdateOperationDelegate <NSObject>
