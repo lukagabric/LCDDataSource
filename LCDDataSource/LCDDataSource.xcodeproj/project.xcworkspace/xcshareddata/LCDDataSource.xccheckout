@@ -12,30 +12,54 @@
 	<dict>
 		<key>33AECA93-FBE1-4478-8D53-D5E07CD75126</key>
 		<string>https://github.com/lukagabric/LReachabilityController.git</string>
-		<key>6810A4CD-C613-4D84-A739-751B8319D97F</key>
-		<string>https://github.com/lukagabric/LCDDataSource.git</string>
+		<key>4733812AB92A6C0453814D29C9333370CF39A716</key>
+		<string>https://github.com/lukagabric/LReachabilityController.git</string>
 		<key>9A5D618F-3435-47C2-8704-132F5F2F34FA</key>
 		<string>https://github.com/lukagabric/LAbstractViewController.git</string>
+		<key>BD760154B5D96D8F3B1DA90A7A6C2232C4A6E645</key>
+		<string>https://github.com/lukagabric/LAbstractViewController.git</string>
+		<key>CDCF39CCA96F78BBE13C44357411A92F3378CDDF</key>
+		<string>https://github.com/lukagabric/LCDDataSource.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>LCDDataSource/LCDDataSource.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>33AECA93-FBE1-4478-8D53-D5E07CD75126</key>
-		<string>../../LCDDataSource/External/LReachabilityController</string>
-		<key>6810A4CD-C613-4D84-A739-751B8319D97F</key>
-		<string>../../..</string>
+		<string>../../../External/LReachabilityController</string>
+		<key>4733812AB92A6C0453814D29C9333370CF39A716</key>
+		<string>../../../LCDDataSource/LCDDataSource/External/LReachabilityController</string>
 		<key>9A5D618F-3435-47C2-8704-132F5F2F34FA</key>
-		<string>../../LCDDataSource/External/LAbstractViewController</string>
+		<string>../../../External/LAbstractViewController</string>
+		<key>BD760154B5D96D8F3B1DA90A7A6C2232C4A6E645</key>
+		<string>../../../LCDDataSource/LCDDataSource/External</string>
+		<key>CDCF39CCA96F78BBE13C44357411A92F3378CDDF</key>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/lukagabric/LCDDataSource.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>6810A4CD-C613-4D84-A739-751B8319D97F</string>
+	<string>CDCF39CCA96F78BBE13C44357411A92F3378CDDF</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BD760154B5D96D8F3B1DA90A7A6C2232C4A6E645</string>
+			<key>IDESourceControlWCCName</key>
+			<string>External</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BD760154B5D96D8F3B1DA90A7A6C2232C4A6E645</string>
+			<key>IDESourceControlWCCName</key>
+			<string>External</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
@@ -48,9 +72,17 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6810A4CD-C613-4D84-A739-751B8319D97F</string>
+			<string>CDCF39CCA96F78BBE13C44357411A92F3378CDDF</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LCDDataSource</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4733812AB92A6C0453814D29C9333370CF39A716</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LReachabilityController</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

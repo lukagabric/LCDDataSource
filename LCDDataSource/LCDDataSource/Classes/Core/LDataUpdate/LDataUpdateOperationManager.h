@@ -15,11 +15,11 @@
 @interface LDataUpdateOperationManager : NSObject <LDataUpdateOperationDelegate>
 
 
-@property (readonly, nonatomic) BOOL finished;
-@property (readonly, nonatomic) BOOL running;
-@property (readonly, nonatomic) BOOL canceled;
-@property (readonly, nonatomic) BOOL newData;
-@property (readonly, nonatomic) NSError *error;
+@property (readonly, atomic) BOOL finished;
+@property (readonly, atomic) BOOL running;
+@property (readonly, atomic) BOOL canceled;
+@property (readonly, atomic) BOOL newData;
+@property (readonly, atomic) NSError *error;
 
 @property (readonly, nonatomic) NSString *groupId;
 
