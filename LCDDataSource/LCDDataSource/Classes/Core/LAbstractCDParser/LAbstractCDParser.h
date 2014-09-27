@@ -5,7 +5,6 @@
 
 
 #import "LCDParserInterface.h"
-#import "ASIHTTPRequest.h"
 
 
 #define ifElement(str)    if ([_elementName isEqualToString:str])
@@ -23,6 +22,8 @@
 
 @interface LAbstractCDParser : NSObject <NSXMLParserDelegate, LCDParserInterface>
 {
+    NSURLResponse *_response;
+    
     NSManagedObjectContext *_context;
     NSMutableSet *_itemsSet;
 
@@ -34,8 +35,6 @@
     NSDateFormatter *_dateFormatter;
 
     NSError *_error;
-    id _userInfo;
-    ASIHTTPRequest *_request;
 }
 
 

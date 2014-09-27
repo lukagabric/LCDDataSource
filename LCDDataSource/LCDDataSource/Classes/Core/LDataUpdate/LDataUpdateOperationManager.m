@@ -8,12 +8,10 @@
 
 
 #import "LDataUpdateOperationManager.h"
-#import "ASIDownloadCache.h"
 #import "LCoreDataController.h"
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
 #import "MBProgressHUD.h"
-#import "ASIHTTPRequest+L.h"
 
 
 #define kStackedRequestsLastUpdateTimeFormat @"StackedRequestsLastUpdateTime.groupId.%@"
@@ -264,24 +262,22 @@ static NSOperationQueue *dataUpdateQueue;
 {
     for (LDataUpdateOperation *operation in _updateOperations)
     {
-        ASIHTTPRequest *request = operation.request;
+        NSString *requestIdentifier = operation.requestIdentifier;
         
-        NSString *key = [request.userInfo objectForKey:@"key"];
+        NSAssert(requestIdentifier, @"Request needs to have a key for caching.");
         
-        NSAssert(key, @"Request needs to have a key for caching.");
+        NSString *responseFingerprint = operation.responseFingerprint;
         
-        NSString *reqId = [request requestEtagOrLastModified];
-        
-        if (reqId)
+        if (responseFingerprint)
         {
-            [[NSUserDefaults standardUserDefaults] setObject:reqId forKey:key];
+            [[NSUserDefaults standardUserDefaults] setObject:responseFingerprint forKey:requestIdentifier];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            NSLog(@"Saved request ID: '%@' for request with key: '%@'", reqId, key);
+            NSLog(@"Saved response fingerprint: '%@' for request with identifier: '%@'", responseFingerprint, requestIdentifier);
         }
         else
         {
-            NSLog(@"No ID for request with url: '%@'. Request needs to have ID (e.g. ETag or Last-Modified) for caching.", [request.url absoluteString]);
+            NSLog(@"No response fingerprint for request with url: '%@' and identifier: '%@'. Request needs to have a fingerprint (e.g. ETag or Last-Modified) for caching.", [operation.response.URL absoluteString], requestIdentifier);
         }
     }
 }
@@ -325,83 +321,6 @@ static NSOperationQueue *dataUpdateQueue;
 - (void)hideProgressForActivityView
 {
     [MBProgressHUD hideAllHUDsForView:_activityView animated:YES];
-}
-
-
-#pragma mark - Request create convenience
-
-
-+ (NSString *)queryStringFromParams:(NSDictionary *)dict
-{
-	if ([dict count] == 0)
-	{
-		return nil;
-	}
-    
-	NSMutableString *query = [NSMutableString string];
-    
-	for (NSString *parameter in [dict allKeys])
-	{
-		[query appendFormat:@"&%@=%@", [parameter stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], [[dict valueForKey:parameter] stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-	}
-    
-	return [NSString stringWithFormat:@"%@", [query substringFromIndex:1]];
-}
-
-
-+ (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
-                          timeoutInterval:(NSTimeInterval)timeoutInterval
-                                  headers:(NSDictionary *)headers
-                               parameters:(NSDictionary *)params
-                            requestMethod:(NSString *)requestMethod
-                                      key:(NSString *)key
-{
-    return [self requestWithUrl:url
-                timeoutInterval:timeoutInterval
-                        headers:headers
-                     parameters:params
-                  requestMethod:requestMethod
-                       userInfo:@{@"key" : [NSString stringWithFormat:@"ASIHTTPRequest.key.%@", key]}];
-}
-
-
-+ (ASIHTTPRequest *)requestWithUrl:(NSString *)url
-				   timeoutInterval:(NSTimeInterval)timeoutInterval
-						   headers:(NSDictionary *)headers
-						parameters:(NSDictionary *)params
-					 requestMethod:(NSString *)requestMethod
-                          userInfo:(NSDictionary *)userInfo
-{
-	NSString *paramsString = [self queryStringFromParams:params];
-	NSString *urlString = url;
-    
-	if ([requestMethod isEqualToString:@"GET"] && paramsString)
-	{
-		urlString = [url stringByAppendingFormat:@"?%@", paramsString];
-	}
-    
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
-	request.downloadCache = [ASIDownloadCache sharedCache];
-    request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
-	request.cachePolicy = ASIAskServerIfModifiedCachePolicy;
-	request.requestMethod = requestMethod;
-	request.timeOutSeconds = timeoutInterval;
-	request.secondsToCache = 0;
-    request.userInfo = userInfo;
-    
-	for (NSString *key in [headers allKeys])
-	{
-		[request addRequestHeader:key value:[headers valueForKey:key]];
-	}
-    
-	if ([requestMethod isEqualToString:@"POST"] && paramsString)
-	{
-		[request setPostBody:[NSMutableData dataWithData:[paramsString dataUsingEncoding:NSUTF8StringEncoding]]];
-		[request addRequestHeader:@"Content-Type" value:@"application/x-www-form-urlencoded"];
-	}
-    
-	return request;
 }
 
 

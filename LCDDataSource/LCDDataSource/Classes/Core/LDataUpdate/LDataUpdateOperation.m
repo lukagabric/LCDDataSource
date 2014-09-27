@@ -11,24 +11,36 @@
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
 #import "LCoreDataController.h"
-#import "ASIHTTPRequest+L.h"
 
 
 @implementation LDataUpdateOperation
+{
+    BOOL _finished;
+    BOOL _executing;
+}
 
 
 #pragma mark - Init
 
 
-- (instancetype)initWithRequest:(ASIHTTPRequest *)request andParser:(id <LCDParserInterface>)parser
+- (instancetype)initWithSession:(NSURLSession *)session
+                        request:(NSURLRequest *)request
+              requestIdentifier:(NSString *)requestIdentifier
+                      andParser:(id <LCDParserInterface>)parser
 {
     self = [super init];
     if (self)
     {
-        NSAssert(request && parser, @"Dependencies are mandatory");
-
-        _request = request;
+        NSAssert(session && request && requestIdentifier && parser, @"Dependencies are mandatory");
+        
         _parser = parser;
+        _requestIdentifier = [requestIdentifier copy];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        _task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            [weakSelf taskFinishedWithData:data response:response andError:error];
+        }];
     }
     return self;
 }
@@ -40,36 +52,39 @@
 }
 
 
-#pragma mark - Main
+#pragma mark - Task finished
 
 
-- (void)main
+- (void)taskFinishedWithData:(NSData *)data response:(NSURLResponse *)response andError:(NSError *)error
 {
-    @autoreleasepool
+    if ([self isCancelled]) return;
+    
+    _responseData = data;
+    _response = response;
+    _error = error;
+    
+    if (_error)
     {
-        if ([self isCancelled]) return;
-        
-        [_request startSynchronous];
-        
-        if ([self isCancelled]) return;
-        
-        if (_request.error || ![self isResponseValidForRequest:_request])
-        {
-            [self finishOperationWithError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"request": _request}]];
-            return;
-        }
-        
-        if ([self isCancelled]) return;
-        
-        NSError *parsingError;
-        
-        if ([self isDataNewForRequest:_request])
-            parsingError = [self parseData];
-        
-        if ([self isCancelled]) return;
-        
-        [self finishOperationWithError:parsingError];
+        [self finishOperationWithError:_error];
+        return;
     }
+    
+    if (![self isResponseValid])
+    {
+        [self finishOperationWithError:[NSError errorWithDomain:@"Invalid response" code:1 userInfo:@{@"response": response}]];
+        return;
+    }
+    
+    if ([self isCancelled]) return;
+    
+    NSError *parsingError;
+    
+    if ([self isDataNew])
+        parsingError = [self parseData];
+    
+    if ([self isCancelled]) return;
+    
+    [self finishOperationWithError:parsingError];
 }
 
 
@@ -79,14 +94,13 @@
 - (NSError *)parseData
 {
     __weak LDataUpdateOperation *weakSelf = self;
-    __weak ASIHTTPRequest *weakRequest = _request;
     __weak NSManagedObjectContext *weakContext = _workerContext;
     __weak id <LCDParserInterface> weakParser = _parser;
     __block NSError *error;
     
     [_workerContext performBlockAndWait:^{
         [weakParser setContext:weakContext];
-        [weakParser parseData:weakRequest.responseData];
+        [weakParser parseData:weakSelf.responseData];
         
         error = [weakParser error];
         
@@ -136,16 +150,12 @@
 }
 
 
-- (BOOL)isDataNewForRequest:(ASIHTTPRequest *)request
+- (BOOL)isDataNew
 {
-    NSString *key = [request.userInfo objectForKey:@"key"];
+    NSString *previousFingerprint = [[NSUserDefaults standardUserDefaults] objectForKey:_requestIdentifier];
+    NSString *currentFingerprint = self.responseFingerprint;
     
-    NSAssert(key, @"Request needs to have a key for caching.");
-    
-    NSString *previousID = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-    NSString *currentID = [request requestEtagOrLastModified];
-    
-    BOOL isDataNew = !previousID || !currentID || ![previousID isEqualToString:currentID];
+    BOOL isDataNew = !previousFingerprint || !currentFingerprint || ![previousFingerprint isEqualToString:currentFingerprint];
     
     NSLog(@"Data is %@new for this request.", isDataNew ? @"" : @"NOT ");
     
@@ -153,37 +163,91 @@
 }
 
 
-- (BOOL)isResponseValidForRequest:(ASIHTTPRequest *)request
+- (NSString *)responseFingerprint
+{
+    NSDictionary *headers = [(NSHTTPURLResponse *)_response allHeaderFields];
+    
+    NSString *etagOrLastModified = [headers objectForKey:@"Etag"];
+    
+    if (!etagOrLastModified)
+        etagOrLastModified = [headers objectForKey:@"Last-Modified"];
+    
+    return etagOrLastModified;
+}
+
+
+- (BOOL)isResponseValid
 {
     return YES;
 }
 
 
-#pragma mark - Finish
+#pragma mark - Finish operation
 
 
 - (void)finishOperationWithError:(NSError *)error
 {
+    _error = error;
+    
     dispatch_sync(dispatch_get_main_queue(), ^{
         [_dataUpdateDelegate operation:self didFinishWithError:error];
     });
+    
+    [self willChangeValueForKey:@"isFinished"];
+    [self willChangeValueForKey:@"isExecuting"];
+    
+    _executing = NO;
+    _finished = YES;
+    
+    [self didChangeValueForKey:@"isExecuting"];
+    [self didChangeValueForKey:@"isFinished"];
 }
 
 
-#pragma mark - Cancel
+#pragma mark - NSOperation
+
+
+- (void)start
+{
+    if (self.isCancelled)
+    {
+        [self willChangeValueForKey:@"isFinished"];
+        _finished = YES;
+        [self didChangeValueForKey:@"isFinished"];
+        return;
+    }
+
+    [self willChangeValueForKey:@"isExecuting"];
+    _executing = NO;
+    [self didChangeValueForKey:@"isExecuting"];
+    
+    [_task resume];
+}
+
+
+- (BOOL)isExecuting
+{
+    return _executing;
+}
+
+
+- (BOOL)isFinished
+{
+    return _finished;
+}
+
+
+- (BOOL)isConcurrent
+{
+    return YES;
+}
 
 
 - (void)cancel
 {
-    @synchronized(self)
-    {
-        if (![self isFinished])
-        {
-            [super cancel];
-            [_request clearDelegatesAndCancel];
-            [_parser abortParsing];
-        }
-    }
+    [super cancel];
+    [_task cancel];
+    [_parser abortParsing];
 }
 
 

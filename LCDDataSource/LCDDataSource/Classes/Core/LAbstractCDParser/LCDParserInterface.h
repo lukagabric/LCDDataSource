@@ -4,13 +4,12 @@
 //
 
 
-#import "ASIHTTPRequest.h"
-
 
 @protocol LCDParserInterface <NSObject>
 
 
 - (void)parseData:(NSData *)data;
+- (void)setResponse:(NSURLResponse *)response;
 - (NSError *)error;
 - (NSSet *)itemsSet;
 - (void)abortParsing;

@@ -22,6 +22,8 @@
 
 @interface LAbstractCDJSONParser : NSObject <LCDParserInterface>
 {
+    NSURLResponse *_response;
+
     NSManagedObjectContext *_context;
     NSMutableSet *_itemsSet;
 
@@ -32,8 +34,6 @@
     NSDictionary *_currentElement;
     
     NSError *_error;
-    id _userInfo;
-    ASIHTTPRequest *_request;
 }
 
 

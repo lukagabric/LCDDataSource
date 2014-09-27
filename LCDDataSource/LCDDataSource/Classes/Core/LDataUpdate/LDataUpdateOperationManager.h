@@ -7,7 +7,6 @@
 //
 
 
-#import "ASIHTTPRequest.h"
 #import "LDataUpdateOperationDelegate.h"
 #import "LDataUpdateOperation.h"
 
@@ -52,21 +51,6 @@
 - (void)createWorkerContext;
 - (void)freeWorkerContext;
 - (void)performSave;
-
-
-+ (ASIHTTPRequest *)stackedRequestWithUrl:(NSString *)url
-                          timeoutInterval:(NSTimeInterval)timeoutInterval
-                                  headers:(NSDictionary *)headers
-                               parameters:(NSDictionary *)params
-                            requestMethod:(NSString *)requestMethod
-                                      key:(NSString *)key;
-
-+ (ASIHTTPRequest *)requestWithUrl:(NSString *)url
-                   timeoutInterval:(NSTimeInterval)timeoutInterval
-                           headers:(NSDictionary *)headers
-                        parameters:(NSDictionary *)params
-                     requestMethod:(NSString *)requestMethod
-                          userInfo:(NSDictionary *)userInfo;
 
 
 @end

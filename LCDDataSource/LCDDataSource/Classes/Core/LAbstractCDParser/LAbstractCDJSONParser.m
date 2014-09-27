@@ -113,9 +113,9 @@
 }
 
 
-- (void)setASIHTTPRequest:(ASIHTTPRequest *)request
+- (void)setResponse:(NSURLResponse *)response;
 {
-    _request = request;
+    _response = response;
 }
 
 
