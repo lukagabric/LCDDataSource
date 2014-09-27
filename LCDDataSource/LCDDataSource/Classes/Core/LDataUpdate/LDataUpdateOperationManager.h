@@ -23,6 +23,7 @@
 @property (readonly, nonatomic) NSString *groupId;
 
 @property (assign, nonatomic) BOOL saveAfterLoad;
+@property (assign, nonatomic) NSUInteger stackedRequestsSecondsToCache;
 @property (weak, nonatomic) UIView *activityView;
 
 
@@ -45,7 +46,6 @@
 @property (copy, nonatomic) void(^updateCompletionBlock)(NSError *error, BOOL newData);
 @property (strong, nonatomic) NSManagedObjectContext *workerContext;
 @property (strong, nonatomic) NSArray *updateOperations;
-@property (assign, nonatomic) NSUInteger stackedRequestsSecondsToCache;
 
 
 - (void)createWorkerContext;

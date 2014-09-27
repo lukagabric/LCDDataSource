@@ -6,7 +6,7 @@
 @implementation DataSourceFactory
 
 
-#define JSON 0
+#define JSON 1
 
 
 #if JSON
