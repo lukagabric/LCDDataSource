@@ -10,13 +10,13 @@
 #define LCDDataSource_LDataUpdateOperationDelegate_h
 
 
-@class LDataUpdateOperation;
+@class LGDataUpdateOperation;
 
 
-@protocol LDataUpdateOperationDelegate <NSObject>
+@protocol LGDataUpdateOperationDelegate <NSObject>
 
 
-- (void)operation:(LDataUpdateOperation *)operation didFinishWithError:(NSError *)error;
+- (void)operation:(LGDataUpdateOperation *)operation didFinishWithError:(NSError *)error;
 
 
 @end

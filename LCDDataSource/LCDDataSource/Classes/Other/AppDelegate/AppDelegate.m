@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "LCoreDataController.h"
+#import "LGCoreDataController.h"
 #import "HomeViewController.h"
 
 
@@ -8,7 +8,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[LCoreDataController sharedCDController] initializeWithDatabaseFileName:@"LCDDataSource" andDataModelFileName:@"LCDDataSource"];
+    [[LGCoreDataController sharedCDController] initializeWithDatabaseFileName:@"LCDDataSource" andDataModelFileName:@"LCDDataSource"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];

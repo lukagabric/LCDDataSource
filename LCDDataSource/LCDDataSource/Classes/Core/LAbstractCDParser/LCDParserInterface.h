@@ -5,7 +5,7 @@
 
 
 
-@protocol LCDParserInterface <NSObject>
+@protocol LGCDParserInterface <NSObject>
 
 
 - (void)parseData:(NSData *)data;

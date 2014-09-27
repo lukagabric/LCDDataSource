@@ -1,10 +1,10 @@
-#import "LDataUpdateOperationManager.h"
+#import "LGDataUpdateOperationManager.h"
 
 
 @interface DataSourceFactory : NSObject
 
 
-+ (LDataUpdateOperationManager *)contactsDataManagerWithActivityView:(UIView *)activityView;
++ (LGDataUpdateOperationManager *)contactsDataManagerWithActivityView:(UIView *)activityView;
 
 
 @end

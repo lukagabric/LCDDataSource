@@ -4,10 +4,10 @@
 //
 
 
-#import "LAbstractCDJSONParser.h"
+#import "LGAbstractCDJSONParser.h"
 
 
-@interface ContactsJSONParser : LAbstractCDJSONParser
+@interface ContactsJSONParser : LGAbstractCDJSONParser
 
 
 @end

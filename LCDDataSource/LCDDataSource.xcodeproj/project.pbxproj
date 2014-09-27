@@ -9,20 +9,20 @@
 /* Begin PBXBuildFile section */
 		412AB6A318ED27180065D3F5 /* ContactsJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 412AB6A218ED27180065D3F5 /* ContactsJSONParser.m */; };
 		412DAF2918E99E4A00A31112 /* LAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF2818E99E4A00A31112 /* LAbstractViewController.m */; };
-		412DAF2D18E99E7600A31112 /* LAbstractCDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF2C18E99E7600A31112 /* LAbstractCDViewController.m */; };
+		412DAF2D18E99E7600A31112 /* LGAbstractCDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF2C18E99E7600A31112 /* LGAbstractCDViewController.m */; };
 		412DAF3418E99F0100A31112 /* LReachabilityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3018E99F0100A31112 /* LReachabilityController.m */; };
 		412DAF3918E99F3E00A31112 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 412DAF3818E99F3E00A31112 /* Reachability.m */; };
-		4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */; };
-		41764E3619C081FC007C0B00 /* LDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */; };
-		41764E3719C081FC007C0B00 /* LDataUpdateOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */; };
+		4159C43D18ED21C50039AD52 /* LGAbstractCDJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4159C43C18ED21C50039AD52 /* LGAbstractCDJSONParser.m */; };
+		41764E3619C081FC007C0B00 /* LGDataUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3219C081FC007C0B00 /* LGDataUpdateOperation.m */; };
+		41764E3719C081FC007C0B00 /* LGDataUpdateOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41764E3519C081FC007C0B00 /* LGDataUpdateOperationManager.m */; };
 		41DCE30B18DB835A00EFFF5C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */; };
 		41F90001189105B600E20929 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F90000189105B600E20929 /* CoreData.framework */; };
 		41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41F900A91891074E00E20929 /* LCDDataSource.xcdatamodeld */; };
 		41F900FF1891074E00E20929 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900AB1891074E00E20929 /* main.m */; };
 		41F9010A1891074F00E20929 /* NSManagedObject+L.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900C91891074E00E20929 /* NSManagedObject+L.m */; };
 		41F9010B1891074F00E20929 /* NSManagedObjectContext+L.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900CB1891074E00E20929 /* NSManagedObjectContext+L.m */; };
-		41F9010D1891074F00E20929 /* LAbstractCDParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900D21891074E00E20929 /* LAbstractCDParser.m */; };
-		41F901101891074F00E20929 /* LCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900DB1891074E00E20929 /* LCoreDataController.m */; };
+		41F9010D1891074F00E20929 /* LGAbstractCDXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900D21891074E00E20929 /* LGAbstractCDXMLParser.m */; };
+		41F901101891074F00E20929 /* LGCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900DB1891074E00E20929 /* LGCoreDataController.m */; };
 		41F901111891074F00E20929 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900DE1891074E00E20929 /* MBProgressHUD.m */; };
 		41F901121891074F00E20929 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900E21891074E00E20929 /* AppDelegate.m */; };
 		41F901131891074F00E20929 /* ContactDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900E61891074E00E20929 /* ContactDetailsViewController.m */; };
@@ -30,7 +30,7 @@
 		41F901151891074F00E20929 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900E91891074E00E20929 /* ContactsViewController.m */; };
 		41F901161891074F00E20929 /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F900EA1891074E00E20929 /* ContactsViewController.xib */; };
 		41F901171891074F00E20929 /* DataSourceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900ED1891074E00E20929 /* DataSourceFactory.m */; };
-		41F901181891074F00E20929 /* ContactsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900EF1891074E00E20929 /* ContactsParser.m */; };
+		41F901181891074F00E20929 /* ContactsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900EF1891074E00E20929 /* ContactsXMLParser.m */; };
 		41F901191891074F00E20929 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900F41891074E00E20929 /* HomeViewController.m */; };
 		41F9011A1891074F00E20929 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41F900F51891074E00E20929 /* HomeViewController.xib */; };
 		41F9011B1891074F00E20929 /* Contact+CD.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F900FA1891074E00E20929 /* Contact+CD.m */; };
@@ -49,19 +49,19 @@
 		412AB6A218ED27180065D3F5 /* ContactsJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsJSONParser.m; sourceTree = "<group>"; };
 		412DAF2718E99E4A00A31112 /* LAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractViewController.h; sourceTree = "<group>"; };
 		412DAF2818E99E4A00A31112 /* LAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractViewController.m; sourceTree = "<group>"; };
-		412DAF2B18E99E7600A31112 /* LAbstractCDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDViewController.h; sourceTree = "<group>"; };
-		412DAF2C18E99E7600A31112 /* LAbstractCDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDViewController.m; sourceTree = "<group>"; };
+		412DAF2B18E99E7600A31112 /* LGAbstractCDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGAbstractCDViewController.h; sourceTree = "<group>"; };
+		412DAF2C18E99E7600A31112 /* LGAbstractCDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGAbstractCDViewController.m; sourceTree = "<group>"; };
 		412DAF2F18E99F0100A31112 /* LReachabilityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LReachabilityController.h; sourceTree = "<group>"; };
 		412DAF3018E99F0100A31112 /* LReachabilityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LReachabilityController.m; sourceTree = "<group>"; };
 		412DAF3718E99F3E00A31112 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		412DAF3818E99F3E00A31112 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		4159C43B18ED21C50039AD52 /* LAbstractCDJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDJSONParser.h; sourceTree = "<group>"; };
-		4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDJSONParser.m; sourceTree = "<group>"; };
-		41764E3119C081FC007C0B00 /* LDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperation.h; sourceTree = "<group>"; };
-		41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperation.m; sourceTree = "<group>"; };
+		4159C43B18ED21C50039AD52 /* LGAbstractCDJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGAbstractCDJSONParser.h; sourceTree = "<group>"; };
+		4159C43C18ED21C50039AD52 /* LGAbstractCDJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGAbstractCDJSONParser.m; sourceTree = "<group>"; };
+		41764E3119C081FC007C0B00 /* LGDataUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGDataUpdateOperation.h; sourceTree = "<group>"; };
+		41764E3219C081FC007C0B00 /* LGDataUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGDataUpdateOperation.m; sourceTree = "<group>"; };
 		41764E3319C081FC007C0B00 /* LDataUpdateOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationDelegate.h; sourceTree = "<group>"; };
-		41764E3419C081FC007C0B00 /* LDataUpdateOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDataUpdateOperationManager.h; sourceTree = "<group>"; };
-		41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDataUpdateOperationManager.m; sourceTree = "<group>"; };
+		41764E3419C081FC007C0B00 /* LGDataUpdateOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGDataUpdateOperationManager.h; sourceTree = "<group>"; };
+		41764E3519C081FC007C0B00 /* LGDataUpdateOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGDataUpdateOperationManager.m; sourceTree = "<group>"; };
 		41DCE30A18DB835A00EFFF5C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41F90000189105B600E20929 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		41F90018189105B600E20929 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -73,10 +73,10 @@
 		41F900C91891074E00E20929 /* NSManagedObject+L.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+L.m"; sourceTree = "<group>"; };
 		41F900CA1891074E00E20929 /* NSManagedObjectContext+L.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+L.h"; sourceTree = "<group>"; };
 		41F900CB1891074E00E20929 /* NSManagedObjectContext+L.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+L.m"; sourceTree = "<group>"; };
-		41F900D11891074E00E20929 /* LAbstractCDParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAbstractCDParser.h; sourceTree = "<group>"; };
-		41F900D21891074E00E20929 /* LAbstractCDParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LAbstractCDParser.m; sourceTree = "<group>"; };
-		41F900DA1891074E00E20929 /* LCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCoreDataController.h; sourceTree = "<group>"; };
-		41F900DB1891074E00E20929 /* LCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCoreDataController.m; sourceTree = "<group>"; };
+		41F900D11891074E00E20929 /* LGAbstractCDXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGAbstractCDXMLParser.h; sourceTree = "<group>"; };
+		41F900D21891074E00E20929 /* LGAbstractCDXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGAbstractCDXMLParser.m; sourceTree = "<group>"; };
+		41F900DA1891074E00E20929 /* LGCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGCoreDataController.h; sourceTree = "<group>"; };
+		41F900DB1891074E00E20929 /* LGCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGCoreDataController.m; sourceTree = "<group>"; };
 		41F900DD1891074E00E20929 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		41F900DE1891074E00E20929 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		41F900E11891074E00E20929 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 		41F900EA1891074E00E20929 /* ContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactsViewController.xib; sourceTree = "<group>"; };
 		41F900EC1891074E00E20929 /* DataSourceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSourceFactory.h; sourceTree = "<group>"; };
 		41F900ED1891074E00E20929 /* DataSourceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSourceFactory.m; sourceTree = "<group>"; };
-		41F900EE1891074E00E20929 /* ContactsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsParser.h; sourceTree = "<group>"; };
-		41F900EF1891074E00E20929 /* ContactsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsParser.m; sourceTree = "<group>"; };
+		41F900EE1891074E00E20929 /* ContactsXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsXMLParser.h; sourceTree = "<group>"; };
+		41F900EF1891074E00E20929 /* ContactsXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsXMLParser.m; sourceTree = "<group>"; };
 		41F900F31891074E00E20929 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		41F900F41891074E00E20929 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		41F900F51891074E00E20929 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 		412DAF2A18E99E7600A31112 /* LAbstractCDViewController */ = {
 			isa = PBXGroup;
 			children = (
-				412DAF2B18E99E7600A31112 /* LAbstractCDViewController.h */,
-				412DAF2C18E99E7600A31112 /* LAbstractCDViewController.m */,
+				412DAF2B18E99E7600A31112 /* LGAbstractCDViewController.h */,
+				412DAF2C18E99E7600A31112 /* LGAbstractCDViewController.m */,
 			);
 			path = LAbstractCDViewController;
 			sourceTree = "<group>";
@@ -177,11 +177,11 @@
 		41764E3019C081FC007C0B00 /* LDataUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				41764E3119C081FC007C0B00 /* LDataUpdateOperation.h */,
-				41764E3219C081FC007C0B00 /* LDataUpdateOperation.m */,
+				41764E3119C081FC007C0B00 /* LGDataUpdateOperation.h */,
+				41764E3219C081FC007C0B00 /* LGDataUpdateOperation.m */,
 				41764E3319C081FC007C0B00 /* LDataUpdateOperationDelegate.h */,
-				41764E3419C081FC007C0B00 /* LDataUpdateOperationManager.h */,
-				41764E3519C081FC007C0B00 /* LDataUpdateOperationManager.m */,
+				41764E3419C081FC007C0B00 /* LGDataUpdateOperationManager.h */,
+				41764E3519C081FC007C0B00 /* LGDataUpdateOperationManager.m */,
 			);
 			path = LDataUpdate;
 			sourceTree = "<group>";
@@ -245,10 +245,10 @@
 			isa = PBXGroup;
 			children = (
 				412241AF19BF181E0056F580 /* LCDParserInterface.h */,
-				41F900D11891074E00E20929 /* LAbstractCDParser.h */,
-				41F900D21891074E00E20929 /* LAbstractCDParser.m */,
-				4159C43B18ED21C50039AD52 /* LAbstractCDJSONParser.h */,
-				4159C43C18ED21C50039AD52 /* LAbstractCDJSONParser.m */,
+				41F900D11891074E00E20929 /* LGAbstractCDXMLParser.h */,
+				41F900D21891074E00E20929 /* LGAbstractCDXMLParser.m */,
+				4159C43B18ED21C50039AD52 /* LGAbstractCDJSONParser.h */,
+				4159C43C18ED21C50039AD52 /* LGAbstractCDJSONParser.m */,
 			);
 			path = LAbstractCDParser;
 			sourceTree = "<group>";
@@ -256,8 +256,8 @@
 		41F900D91891074E00E20929 /* LCoreDataController */ = {
 			isa = PBXGroup;
 			children = (
-				41F900DA1891074E00E20929 /* LCoreDataController.h */,
-				41F900DB1891074E00E20929 /* LCoreDataController.m */,
+				41F900DA1891074E00E20929 /* LGCoreDataController.h */,
+				41F900DB1891074E00E20929 /* LGCoreDataController.m */,
 			);
 			path = LCoreDataController;
 			sourceTree = "<group>";
@@ -319,8 +319,8 @@
 			children = (
 				41F900EC1891074E00E20929 /* DataSourceFactory.h */,
 				41F900ED1891074E00E20929 /* DataSourceFactory.m */,
-				41F900EE1891074E00E20929 /* ContactsParser.h */,
-				41F900EF1891074E00E20929 /* ContactsParser.m */,
+				41F900EE1891074E00E20929 /* ContactsXMLParser.h */,
+				41F900EF1891074E00E20929 /* ContactsXMLParser.m */,
 				412AB6A118ED27180065D3F5 /* ContactsJSONParser.h */,
 				412AB6A218ED27180065D3F5 /* ContactsJSONParser.m */,
 			);
@@ -475,25 +475,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41764E3719C081FC007C0B00 /* LDataUpdateOperationManager.m in Sources */,
+				41764E3719C081FC007C0B00 /* LGDataUpdateOperationManager.m in Sources */,
 				41F901131891074F00E20929 /* ContactDetailsViewController.m in Sources */,
 				412DAF3418E99F0100A31112 /* LReachabilityController.m in Sources */,
-				41F9010D1891074F00E20929 /* LAbstractCDParser.m in Sources */,
+				41F9010D1891074F00E20929 /* LGAbstractCDXMLParser.m in Sources */,
 				41F9011C1891074F00E20929 /* Contact.m in Sources */,
 				41F900FF1891074E00E20929 /* main.m in Sources */,
-				41764E3619C081FC007C0B00 /* LDataUpdateOperation.m in Sources */,
-				4159C43D18ED21C50039AD52 /* LAbstractCDJSONParser.m in Sources */,
+				41764E3619C081FC007C0B00 /* LGDataUpdateOperation.m in Sources */,
+				4159C43D18ED21C50039AD52 /* LGAbstractCDJSONParser.m in Sources */,
 				41F901151891074F00E20929 /* ContactsViewController.m in Sources */,
 				41F901111891074F00E20929 /* MBProgressHUD.m in Sources */,
 				41F9011B1891074F00E20929 /* Contact+CD.m in Sources */,
 				412DAF2918E99E4A00A31112 /* LAbstractViewController.m in Sources */,
 				412AB6A318ED27180065D3F5 /* ContactsJSONParser.m in Sources */,
-				412DAF2D18E99E7600A31112 /* LAbstractCDViewController.m in Sources */,
+				412DAF2D18E99E7600A31112 /* LGAbstractCDViewController.m in Sources */,
 				41F9010B1891074F00E20929 /* NSManagedObjectContext+L.m in Sources */,
 				41F901171891074F00E20929 /* DataSourceFactory.m in Sources */,
 				41F900FE1891074E00E20929 /* LCDDataSource.xcdatamodeld in Sources */,
-				41F901181891074F00E20929 /* ContactsParser.m in Sources */,
-				41F901101891074F00E20929 /* LCoreDataController.m in Sources */,
+				41F901181891074F00E20929 /* ContactsXMLParser.m in Sources */,
+				41F901101891074F00E20929 /* LGCoreDataController.m in Sources */,
 				412DAF3918E99F3E00A31112 /* Reachability.m in Sources */,
 				41F9010A1891074F00E20929 /* NSManagedObject+L.m in Sources */,
 				41F901121891074F00E20929 /* AppDelegate.m in Sources */,

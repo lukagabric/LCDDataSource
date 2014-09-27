@@ -1,5 +1,5 @@
 #import "DataSourceFactory.h"
-#import "ContactsParser.h"
+#import "ContactsXMLParser.h"
 #import "ContactsJSONParser.h"
 
 
@@ -10,10 +10,10 @@
 
 
 #if JSON
-+ (LDataUpdateOperation *)contactsUpdateOperation
++ (LGDataUpdateOperation *)contactsUpdateOperation
 {
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://lukagabric.com/wp-content/uploads/2014/03/contacts.json"]];
-    return [[LDataUpdateOperation alloc] initWithSession:[NSURLSession sharedSession]
+    return [[LGDataUpdateOperation alloc] initWithSession:[NSURLSession sharedSession]
                                                  request:request
                                        requestIdentifier:@"ContactsJSON"
                                                andParser:[ContactsJSONParser new]];
@@ -32,9 +32,9 @@
 #endif
 
 
-+ (LDataUpdateOperationManager *)contactsDataManagerWithActivityView:(UIView *)activityView
++ (LGDataUpdateOperationManager *)contactsDataManagerWithActivityView:(UIView *)activityView
 {
-    LDataUpdateOperationManager *contactsDataManager = [[LDataUpdateOperationManager alloc] initWithUpdateOperations:@[[self contactsUpdateOperation]] andGroupId:@"contacts"];
+    LGDataUpdateOperationManager *contactsDataManager = [[LGDataUpdateOperationManager alloc] initWithUpdateOperations:@[[self contactsUpdateOperation]] andGroupId:@"contacts"];
     contactsDataManager.activityView = activityView;
     
     return contactsDataManager;

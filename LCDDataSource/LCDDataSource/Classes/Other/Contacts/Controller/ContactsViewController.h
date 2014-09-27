@@ -1,11 +1,11 @@
-#import "LAbstractCDViewController.h"
+#import "LGAbstractCDViewController.h"
 #import "DataSourceFactory.h"
-#import "LDataUpdateOperationManager.h"
+#import "LGDataUpdateOperationManager.h"
 
 
-@interface ContactsViewController : LAbstractCDViewController
+@interface ContactsViewController : LGAbstractCDViewController
 {
-    LDataUpdateOperationManager *_contactsDataManager;
+    LGDataUpdateOperationManager *_contactsDataManager;
 }
 
 

@@ -5,7 +5,7 @@
 
 
 #import "NSManagedObject+L.h"
-#import "LCoreDataController.h"
+#import "LGCoreDataController.h"
 #import <CoreData/CoreData.h>
 #import "NSManagedObjectContext+L.h"
 
