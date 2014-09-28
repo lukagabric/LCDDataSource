@@ -1,3 +1,8 @@
+Deprecated
+==========
+
+Instead use https://github.com/lukagabric/LGCDDataSource
+
 LCDDataSource
 =============
 
